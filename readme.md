@@ -38,7 +38,7 @@ Applications have been solved by these solvers:
 
   
 
-# The Authors
+## The Authors
 
 We hope that the package is useful for your application. If you have any bug reports or comments, please feel free to email one of the software authors:
 
