@@ -6,8 +6,8 @@ A toolbox for solving phase factors in Quantum signal processing.
 
 ## Problems and solvers
 
-Given a real polynomial <img src="http://chart.googleapis.com/chart?cht=tx&chl= \tilde{P}" style="border:none;"> of degree $d$ with definite parity such that $|\tilde P(x)|\le 1, x\in[-1,1]$, the package contains codes for solving phase factors $\Phi=(\phi_0,\dots,\phi_d)$ such that
-$$
+Given a real polynomial <img src="http://chart.googleapis.com/chart?cht=tx&chl= \tilde{P}" style="border:none;"> of degree <img src="http://chart.googleapis.com/chart?cht=tx&chl= d" style="border:none;"> with definite parity such that <img src="http://chart.googleapis.com/chart?cht=tx&chl= |\tilde{P}(x)| \le 1, x\in[-1,1]" style="border:none;">, the package contains codes for solving phase factors <img src="http://chart.googleapis.com/chart?cht=tx&chl= \Phi=(\phi_0,\dots,\phi_d)" style="border:none;"> such that
+<img src="http://chart.googleapis.com/chart?cht=tx&chl=
 \begin{aligned}
         &U_\Phi(x) = e^{i \phi_0 \sigma_z} \prod_{j=1}^{d} \left[ W(x) e^{i \phi_j \sigma_z} \right]\\
         &= \left( \begin{array}{cc}
@@ -15,8 +15,8 @@ $$
         i Q^*(x) \sqrt{1 - x^2} & P^*(x)
         \end{array} \right),
 \end{aligned}
-$$
-where $\Re[P]=\tilde P$.
+" style="border:none;">
+where <img src="http://chart.googleapis.com/chart?cht=tx&chl= \Re[P]=\tilde{P}" style="border:none;">.
 
 The package contains two kinds of solvers:
 
@@ -39,7 +39,7 @@ Applications have been solved by these solvers:
 
   
 ## Citing our work
-If you find our work useful or you use our work in your own project, please consider to cite our work
+If you find our work useful or you use our work in your own project, please consider to cite our work.
 
 ## The Authors
 
