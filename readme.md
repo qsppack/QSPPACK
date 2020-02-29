@@ -1,5 +1,4 @@
 ﻿
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 # QSP phase factors solvers  
 
@@ -7,7 +6,7 @@ A toolbox for solving phase factors in Quantum signal processing.
 
 ## Problems and solvers
 
-Given a real polynomial $\tilde P$ of degree $d$ with definite parity such that $|\tilde P(x)|\le 1, x\in[-1,1]$, the package contains codes for solving phase factors $\Phi=(\phi_0,\dots,\phi_d)$ such that
+Given a real polynomial <img src="http://chart.googleapis.com/chart?cht=tx&chl= \tilde P" style="border:none;"> of degree $d$ with definite parity such that $|\tilde P(x)|\le 1, x\in[-1,1]$, the package contains codes for solving phase factors $\Phi=(\phi_0,\dots,\phi_d)$ such that
 $$
 \begin{aligned}
         &U_\Phi(x) = e^{i \phi_0 \sigma_z} \prod_{j=1}^{d} \left[ W(x) e^{i \phi_j \sigma_z} \right]\\
