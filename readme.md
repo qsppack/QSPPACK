@@ -32,11 +32,13 @@ Applications have been solved by these solvers:
 
 ## References
 
-- [Y. Dong, X. Meng, K. B. Whaley, and L. Lin. Efficient Phase Factor Evaluation in Quantum Signal Processing](https://arxiv.org/abs/2002.11649)
+- [Y. Dong, X. Meng, K. B. Whaley, and L. Lin. Efficient Phase Factor Evaluation in Quantum Signal Processing. arXiv: 2002.11649](https://arxiv.org/abs/2002.11649)
 - [A. Gilyén, Y. Su, G. H. Low, and N. Wiebe. Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics. In Proceedings of the 51st Annual ACM SIGACT Symposium on Theory of Computing, pages 193–204, 2019](https://dl.acm.org/doi/10.1145/3313276.3316366)
 - [J. Haah. Product decomposition of periodic functions in quantum signal processing.Quantum, 3:190, 2019](https://quantum-journal.org/papers/q-2019-10-07-190/)
 
   
+## Citing our work
+If you find our work useful or you use our work in your own project, please consider to cite our work
 
 ## The Authors
 
