@@ -1,4 +1,8 @@
 ﻿
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+
 # QSP phase factors solvers  
 
 A toolbox for solving phase factors in Quantum signal processing.
