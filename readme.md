@@ -6,17 +6,9 @@ A toolbox for solving phase factors in Quantum signal processing.
 
 ## Problems and solvers
 
-Given a real polynomial <img src="http://chart.googleapis.com/chart?cht=tx&chl= \tilde{P}" style="border:none;"> of degree <img src="http://chart.googleapis.com/chart?cht=tx&chl= d" style="border:none;"> with definite parity such that <img src="http://chart.googleapis.com/chart?cht=tx&chl= |\tilde{P}(x)| \le 1, x\in[-1,1]" style="border:none;">, the package contains codes for solving phase factors <img src="http://chart.googleapis.com/chart?cht=tx&chl= \Phi=(\phi_0,\dots,\phi_d)" style="border:none;"> such that
-<img src="http://chart.googleapis.com/chart?cht=tx&chl=
-\begin{aligned}
-        &U_\Phi(x) = e^{\mathrm{i} \phi_0 \sigma_z} \prod_{j=1}^{d} \left[ e^{\mathrm{i} \arccos(x) \sigma_x} e^{\mathrm{i} \phi_j \sigma_z} \right]\\
-        &= \left( \begin{array}{cc}
-        P(x) & \mathrm{i} Q(x) \sqrt{1 - x^2}\\
-        \mathrm{i} Q^*(x) \sqrt{1 - x^2} & P^*(x)
-        \end{array} \right),
-\end{aligned}
-" style="border:none;">
-where <img src="http://chart.googleapis.com/chart?cht=tx&chl= \Re[P]=\tilde{P}" style="border:none;">.
+Given a real polynomial <img src="http://chart.googleapis.com/chart?cht=tx&chl= f" style="border:none;"> of degree <img src="http://chart.googleapis.com/chart?cht=tx&chl= d" style="border:none;"> with definite parity such that <img src="http://chart.googleapis.com/chart?cht=tx&chl= |f(x)| \le 1, x\in[-1,1]" style="border:none;">, the package contains codes for solving phase factors <img src="http://chart.googleapis.com/chart?cht=tx&chl= \Phi=(\phi_0,\dots,\phi_d)" style="border:none;"> such that
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{aligned}&space;&U_\Phi(x)&space;=&space;e^{\mathrm{i}&space;\phi_0&space;\sigma_z}&space;\prod_{j=1}^{d}&space;\left[&space;e^{\mathrm{i}&space;\arccos(x)&space;\sigma_x}&space;e^{\mathrm{i}&space;\phi_j&space;\sigma_z}&space;\right]\\&space;&=&space;\left(&space;\begin{array}{cc}&space;P(x)&space;&&space;\mathrm{i}&space;Q(x)&space;\sqrt{1&space;-&space;x^2}\\&space;\mathrm{i}&space;Q^*(x)&space;\sqrt{1&space;-&space;x^2}&space;&&space;P^*(x)&space;\end{array}&space;\right),&space;\end{aligned}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{aligned}&space;&U_\Phi(x)&space;=&space;e^{\mathrm{i}&space;\phi_0&space;\sigma_z}&space;\prod_{j=1}^{d}&space;\left[&space;e^{\mathrm{i}&space;\arccos(x)&space;\sigma_x}&space;e^{\mathrm{i}&space;\phi_j&space;\sigma_z}&space;\right]\\&space;&=&space;\left(&space;\begin{array}{cc}&space;P(x)&space;&&space;\mathrm{i}&space;Q(x)&space;\sqrt{1&space;-&space;x^2}\\&space;\mathrm{i}&space;Q^*(x)&space;\sqrt{1&space;-&space;x^2}&space;&&space;P^*(x)&space;\end{array}&space;\right),&space;\end{aligned}" title="\begin{aligned} &U_\Phi(x) = e^{\mathrm{i} \phi_0 \sigma_z} \prod_{j=1}^{d} \left[ e^{\mathrm{i} \arccos(x) \sigma_x} e^{\mathrm{i} \phi_j \sigma_z} \right]\\ &= \left( \begin{array}{cc} P(x) & \mathrm{i} Q(x) \sqrt{1 - x^2}\\ \mathrm{i} Q^*(x) \sqrt{1 - x^2} & P^*(x) \end{array} \right), \end{aligned}" /></a>
+where <img src="http://chart.googleapis.com/chart?cht=tx&chl= P_{\mathrm{Re}}=f" style="border:none;">.
 
 The package contains two kinds of solvers:
 
