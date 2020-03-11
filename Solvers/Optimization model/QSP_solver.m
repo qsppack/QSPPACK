@@ -10,7 +10,7 @@ function [phi,out] = QSP_solver(coef,parity,opts)
 %                criteria: stop criteria 
 %
 % Output:
-%       theta --- Solution of robust optimization problem
+%         phi --- Solution of robust optimization problem
 %         out --- Information of solving process
 %
 %--------------------------------------------------------------------------
