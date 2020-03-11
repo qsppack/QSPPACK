@@ -6,8 +6,8 @@ function [phi,out] = QSP_solver(coef,parity,opts)
 % optimization variables, while in the code we used the second half of the 
 % phase factors. These two formulations are equivalent. 
 %
-% In addition, a constant pi/4 is added to both sides of the phase factors 
-% to simplify the representation.
+% To simplify the representation, a constant pi/4 is added to both sides of 
+% the phase factors when evaluating the objective and the gradient.
 %
 % Input:
 %       coef --- Coefficients of polynomial P under Chevyshev basis, P
@@ -46,7 +46,6 @@ grad = @QSPGrad_sym;
 
 %--------------------------------------------------------------------------
 % solve by L-BFGS with selected initial point
-% we've addeded \pi/4 on both sides in function obj and grad 
 
 tic;
 [phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,zeros(tot_len,1),opts);
