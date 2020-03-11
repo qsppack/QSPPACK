@@ -1,6 +1,6 @@
 function [obj] = QSPObj_sym(phi, delta, opts)
 %--------------------------------------------------------------------------
-% Evalute the objective of QSP function, provided that phi is symmetric
+% Evalute the objective of QSP function, provided that phi is symmetric.
 %
 % Input:
 %        phi --- Variables

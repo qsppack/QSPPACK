@@ -2,6 +2,13 @@ function [phi,out] = QSP_solver(coef,parity,opts)
 %--------------------------------------------------------------------------
 % Given coefficients of a polynomial P, yield corresponding phase factors
 %
+% The reference chose the first half of the phase factors as the 
+% optimization variables, while in the code we used the second half of the 
+% phase factors. These two formulations are equivalent. 
+%
+% In addition, a constant pi/4 is added to both sides of the phase factors 
+% to simplify the representation.
+%
 % Input:
 %       coef --- Coefficients of polynomial P under Chevyshev basis, P
 %                should be even/odd, only provide non-zero coefficients
