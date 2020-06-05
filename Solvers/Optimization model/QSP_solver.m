@@ -27,7 +27,7 @@ function [phi,out] = QSP_solver(coef,parity,opts)
 %
 % Author: Xiang Meng, Yulong Dong
 % Version 1.0
-% Last Update 2020.2
+% Last Update 06/2020
 %
 %--------------------------------------------------------------------------
 % setup options for L-BFGS solver
