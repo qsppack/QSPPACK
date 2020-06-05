@@ -19,7 +19,7 @@ function [hess, grad, obj] = QSPHess_sym(phi,delta,opts)
 %
 % Author: Xiang Meng, Yulong Dong
 % Version 1.0
-% Last revision 2020.2
+% Last revision 02/2020
 %
 %--------------------------------------------------------------------------
 % initial computation
