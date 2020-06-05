@@ -4,7 +4,7 @@
 %
 % Input:
 %       x, coef
-%       parity  -- true for even
+%       parity  -- 0 for even, 1 for odd
 %  partialcoef  -- true: only include even/odd coefficiennts
 % Output:
 %       ret     -- function at x
@@ -17,11 +17,11 @@
 %
 % ----------------------------------------------------------------------
 
-function ret = ChebyCoef2Func(x, coef, evenparity, partialcoef)
+function ret = ChebyCoef2Func(x, coef, parity, partialcoef)
 ret = zeros(length(x), 1);
 y = acos(x);
 if partialcoef
-    if evenparity
+    if parity == 0
         for k = 1:length(coef)
             ret = ret + coef(k) * cos(2*(k-1)*y);
         end
@@ -31,7 +31,7 @@ if partialcoef
         end
     end
 else
-    if evenparity
+    if parity == 0
         for k = 1:2:length(coef)
             ret = ret + coef(k) * cos((k-1)*y);
         end
