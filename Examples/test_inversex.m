@@ -1,4 +1,3 @@
-function test_inversex
 %--------------------------------------------------------------------------
 % # Test case 3: Matrix inversion
 %
@@ -14,6 +13,15 @@ function test_inversex
 %
 % note that coefficients corresponds to parameter kappa are pre-calculated,
 % one can only choose kappa = 10,20,30,40,50
+%
+%--------------------------------------------------------------------------
+%
+% Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
+%            Efficient Phase Factor Evaluation in Quantum Signal Processing
+%
+% Author: Yulong Dong, Xiang Meng
+% Version 1.0
+% Last Update 06/2020
 %
 %--------------------------------------------------------------------------
 % setup parameters
@@ -50,9 +58,19 @@ fprintf("- CPU time: \t%.1f s\n", out.time);
 
 if(plot_phase)
     figure(1);
-    plot(1:length(phi),phi);
+    temp = phi;
+    temp(1) = temp(1) - pi/4;
+    temp(end) = temp(end) - pi/4;
+    plot(1:length(temp),temp);
+    
+    x = linspace(1/kappa,1,1000);
+    y = 1./x;
+    yqsp = zeros(size(x));
+    for jj = 1:length(x)
+        yqsp(jj) = QSPGetUnitary(phi, x(jj));
+    end
+    scale_fac = mean(rmmissing(yqsp./y));
+    fprintf("- Linf approximation error: \t%.2e\n", norm(y*scale_fac - yqsp, inf));
 end
 
 %--------------------------------------------------------------------------
-
-end
