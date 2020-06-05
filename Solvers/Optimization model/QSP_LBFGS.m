@@ -31,7 +31,7 @@ function [phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,phi,opts)
 %
 % Author: Xiang Meng, Yulong Dong
 % Version 1.0
-% Last Update 2020.2
+% Last Update 02/2020
 %
 %--------------------------------------------------------------------------
 % options for L-BFGS solver
