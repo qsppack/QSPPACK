@@ -39,7 +39,7 @@ if ~isfield(opts,'criteria');              opts.criteria = 1e-12; end
 
 tot_len = length(coef);
 delta = cos((1:2:(2*tot_len-1))*(pi/2/(2*tot_len)))';
-opts.target = @(x, opts) ChebyCoef2Func(x, coef, 1-parity, true);
+opts.target = @(x, opts) ChebyCoef2Func(x, coef, parity, true);
 opts.parity = parity;
 obj = @QSPObj_sym;
 grad = @QSPGrad_sym;
