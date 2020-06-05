@@ -1,4 +1,3 @@
-function test_HS
 %--------------------------------------------------------------------------
 % Test case 1: Hamiltonian simulation
 %
@@ -16,11 +15,20 @@ function test_HS
 %     plot_phase: whether plot phase factors
 %
 %--------------------------------------------------------------------------
+%
+% Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
+%            Efficient Phase Factor Evaluation in Quantum Signal Processing
+%
+% Author: Yulong Dong, Xiang Meng
+% Version 1.0
+% Last Update 06/2020
+%
+%--------------------------------------------------------------------------
 % setup parameters
 
 tau = 1000;
 criteria = 1e-12;
-plot_phase = false;
+plot_phase = true;
 
 %--------------------------------------------------------------------------
 % find phase factors
@@ -68,11 +76,34 @@ fprintf("- CPU time: \t%.1f s\n", out2.time);
 
 if(plot_phase)
     figure(1);
-    plot(1:length(phi1),phi1);
+    temp = phi1;
+    temp(1) = temp(1) - pi/4;
+    temp(end) = temp(end) - pi/4;
+    plot(1:length(temp),temp);
+    
+    x = linspace(0,1,1000);
+    y = cos(tau*x);
+    yqsp = zeros(size(x));
+    for jj = 1:length(x)
+        yqsp(jj) = QSPGetUnitary(phi1, x(jj));
+    end
+    scale_fac = mean(rmmissing(yqsp./y));
+    fprintf("- Linf approximation error (even): \t%.2e\n", norm(y*scale_fac - yqsp, inf));
+    
     figure(2);
-    plot(1:length(phi2),phi2);
+    temp = phi2;
+    temp(1) = temp(1) - pi/4;
+    temp(end) = temp(end) - pi/4;
+    plot(1:length(temp),temp);
+    
+    x = linspace(0,1,1000);
+    y = sin(tau*x);
+    yqsp = zeros(size(x));
+    for jj = 1:length(x)
+        yqsp(jj) = QSPGetUnitary(phi2, x(jj));
+    end
+    scale_fac = mean(rmmissing(yqsp./y));
+    fprintf("- Linf approximation error (odd): \t%.2e\n", norm(y*scale_fac - yqsp, inf));
 end
 
 %--------------------------------------------------------------------------
-
-end
