@@ -1,4 +1,4 @@
-function [phi,out] = QSP_solver(coef,parity,opts)
+function [phi_proc,out] = QSP_solver(coef,parity,opts)
 %--------------------------------------------------------------------------
 % Given coefficients of a polynomial P, yield corresponding phase factors
 %
@@ -7,7 +7,8 @@ function [phi,out] = QSP_solver(coef,parity,opts)
 % phase factors. These two formulations are equivalent. 
 %
 % To simplify the representation, a constant pi/4 is added to both sides of 
-% the phase factors when evaluating the objective and the gradient.
+% the phase factors when evaluating the objective and the gradient. In the
+% output, the FULL phase factors with pi/4 are given.
 %
 % Input:
 %       coef --- Coefficients of polynomial P under Chevyshev basis, P
@@ -17,7 +18,7 @@ function [phi,out] = QSP_solver(coef,parity,opts)
 %                criteria: stop criteria 
 %
 % Output:
-%         phi --- Solution of robust optimization problem
+%    phi_proc --- Solution of optimization problem, FULL phase factors
 %         out --- Information of solving process
 %
 %--------------------------------------------------------------------------
@@ -49,6 +50,18 @@ grad = @QSPGrad_sym;
 
 tic;
 [phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,zeros(tot_len,1),opts);
+% add pi/4 at the end
+phi(end) = phi(end) + pi/4;
+% construct full phase factors
+if( parity == 0 )
+  phi_proc = zeros(2*length(phi)-1,1);
+  phi_proc(1:(length(phi)-1)) = phi(end:-1:2);
+  phi_proc(length(phi):end)=phi;
+else
+  phi_proc = zeros(2*length(phi),1);
+  phi_proc(1:length(phi)) = phi(end:-1:1);
+  phi_proc(length(phi)+1:end) = phi;
+end
 time = toc;
 
 %--------------------------------------------------------------------------
