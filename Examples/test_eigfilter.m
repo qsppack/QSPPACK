@@ -1,4 +1,3 @@
-function test_eigfilter
 %--------------------------------------------------------------------------
 % Test case 2: Eigenstate filter
 %
@@ -19,6 +18,15 @@ function test_eigfilter
 % note that coefficients corresponds to pair (n,delta) are pre-calculated,
 % one can only choose delta=0.1,0.05,0.01,0.005 and 
 % n*delta = 3,5,10,15,20,25
+%
+%--------------------------------------------------------------------------
+%
+% Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
+%            Efficient Phase Factor Evaluation in Quantum Signal Processing
+%
+% Author: Yulong Dong, Xiang Meng
+% Version 1.0
+% Last Update 06/2020
 %
 %--------------------------------------------------------------------------
 % setup parameters
@@ -46,9 +54,21 @@ fprintf("- CPU time: \t%.1f s\n", out.time);
 
 if(plot_phase)
     figure(1);
-    plot(1:length(phi),phi);
+    temp = phi;
+    temp(1) = temp(1) - pi/4;
+    temp(end) = temp(end) - pi/4;
+    plot(1:length(temp),temp);
+    
+    x = linspace(0,1,1000);
+    temp_fac = cos(n*acos(-1-2*delta^2/(1-delta^2)));
+    y = cos(n*acos(-1+2*(x.^2-delta^2)/(1-delta^2)));
+    y = real(y / temp_fac);
+    yqsp = zeros(size(x));
+    for jj = 1:length(x)
+        yqsp(jj) = QSPGetUnitary(phi, x(jj));
+    end
+    scale_fac = mean(rmmissing(yqsp./y));
+    fprintf("- Linf approximation error: \t%.2e\n", norm(y*scale_fac - yqsp, inf));
 end
 
 %--------------------------------------------------------------------------
-
-end
