@@ -2,7 +2,7 @@
 
 # QSP phase factors solvers  
 
-A toolbox for solving phase factors in Quantum signal processing.
+A toolbox for solving phase factors in quantum signal processing.
 
 ## Problems and solvers
 
