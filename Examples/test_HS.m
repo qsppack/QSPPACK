@@ -26,7 +26,7 @@
 %--------------------------------------------------------------------------
 % setup parameters
 
-tau = 1000;
+tau = 50;
 criteria = 1e-12;
 plot_phase = true;
 
@@ -39,6 +39,11 @@ if(mod(maxorder,2)==1)
     maxorder = maxorder-1;
 end
 
+fprintf("- Info: \t\tQSP phase factors (solved by L-BFGS)\n")
+fprintf("- Propagation time:\t%10.5f\n", tau);
+fprintf("\n\n");
+
+
 %--------------------------------------------------------------------------
 % even part
 
@@ -49,13 +54,14 @@ end
 coef(1) = coef(1)/2;
 [phi1,out1] = QSP_solver(coef,0,opts);
 
-fprintf("- Info: \t\tQSP phase factors --- solved by L-BFGS\n")
 fprintf("- Parity: \t\t%s\n- Degree: \t\t%d\n", "even", maxorder);
 fprintf("- Iteration times: \t%d\n", out1.iter);
 fprintf("- CPU time: \t%.1f s\n", out1.time);
 
 %--------------------------------------------------------------------------
 % odd part
+
+fprintf("\n\n");
 
 coef = zeros(maxorder/2+1,1);
 for i=1:length(coef)
@@ -66,13 +72,14 @@ end
 %--------------------------------------------------------------------------
 % output
 
-fprintf("- Info: \t\tQSP phase factors --- solved by L-BFGS\n")
 fprintf("- Parity: \t\t%s\n- Degree: \t\t%d\n", "odd", maxorder+1);
 fprintf("- Iteration times: \t%d\n", out2.iter);
 fprintf("- CPU time: \t%.1f s\n", out2.time);
 
 %--------------------------------------------------------------------------
 % plot phase factors
+
+fprintf("\n\n");
 
 if(plot_phase)
     figure(1);
