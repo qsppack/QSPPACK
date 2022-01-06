@@ -1,4 +1,4 @@
-﻿
+
 
 # QSP phase factors solvers  
 
@@ -25,34 +25,52 @@ Applications have been solved by these solvers:
 - Eigenstate filter
 - Matrix inversion
 
-## References
+## Citing our work
 
-- [Y. Dong, X. Meng, K. B. Whaley, and L. Lin. Efficient Phase Factor Evaluation in Quantum Signal Processing. arXiv: 2002.11649](https://arxiv.org/abs/2002.11649)
+If you find our work useful or you use our work in your own project, please consider to cite our work.
+
+- [Y. Dong, X. Meng, K. B. Whaley, and L. Lin. Efficient Phase Factor Evaluation in Quantum Signal Processing, Phys. Rev. A 103, 042419, 2021](https://arxiv.org/abs/2002.11649)
+
+Other references: 
+
 - [A. Gilyén, Y. Su, G. H. Low, and N. Wiebe. Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics. In Proceedings of the 51st Annual ACM SIGACT Symposium on Theory of Computing, pages 193–204, 2019](https://dl.acm.org/doi/10.1145/3313276.3316366)
 - [J. Haah. Product decomposition of periodic functions in quantum signal processing.Quantum, 3:190, 2019](https://quantum-journal.org/papers/q-2019-10-07-190/)
 
-  
-## Citing our work
-If you find our work useful or you use our work in your own project, please consider to cite our work.
 
-## The Authors
+
+##  Authors
 
 We hope that the package is useful for your application. If you have any bug reports or comments, please feel free to email one of the software authors:
 
+* Yulong Dong, dongyl@berkeley.edu
+
 * Xiang Meng, mengxianglgal@gmail.com
 
-* Yulong Dong, dongyl@berkeley.edu
+* Lin Lin, linlin@math.berkeley.edu
 
   
 
 ## Installation
 
-`>> startup`
+- You can download qsppack and run
+
+	`>> startup`
+
+	This adds the folder of the solver to MATLAB's path variable.
+
+- Alternatively you can install qsppack to your current directory by pasting the code below to your MATLAB command window:
+
+    ```matlab
+    unzip('https://github.com/qsppack/qsppack/archive/master.zip')
+    movefile('QSPPACK-master', 'qsppack')
+    addpath(fullfile(cd,'qsppack','Solvers','Optimization')), savepath
+    ```
+
+Then you can test qsppack by running
 
 `>> cd Examples`
 
 `>> test_HS`
-
 
 
 

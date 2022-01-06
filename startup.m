@@ -1,5 +1,5 @@
 % startup file
-src = pwd;
 
-% add path
-addpath(genpath(src));
+% add and store path
+addpath(fullfile(cd,'Solvers','Optimization'))
+savepath
