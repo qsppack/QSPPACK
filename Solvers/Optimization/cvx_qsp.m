@@ -1,4 +1,4 @@
-function phi_qc = cvx_qsp(func, deg, opts)
+function phi = cvx_qsp(func, deg, opts)
 %% Find the phase factors associate with a given smooth function.
 %
 % cvx_qsp first uses cvx to find a polynomial approximating the function
@@ -107,56 +107,4 @@ end
 %% Compute the QSP phase factors
 opts_qsp.criteria = opts.criteria;
 [phi,out] = QSP_solver(coef, parity,opts_qsp);
-
-% phi_shift removes the pi/4 contribution from both ends
-phi_shift = phi;
-phi_shift(1) = phi_shift(1) - pi/4;
-phi_shift(end) = phi_shift(end) - pi/4;
-
-phi_qc = phi_shift + pi/2; % output that can be used in the circuit
-
-%% Plot
-
-if( opts.isplot == true )
-  fname = sprintf('%s_deg%d_', opts.fname, deg)
-
-  figure(1);
-  plot(0:length(phi_shift)-1,phi_shift,'b-o');
-  xlabel('$l$','Interpreter','latex')
-  ylabel('$\phi_l$','Interpreter','latex')
-  set(gca,'fontsize',16)    
-  print([fname,'phase'],'-dpng')
-
-  yqsp = zeros(npts,1);
-  for jj = 1:npts
-    yqsp(jj) = QSPGetUnitary(phi, xpts(jj));
-  end
-  figure(2);
-  clf
-  hold on
-  plot(xpts, yqsp, 'bo')
-  for i = 1 : n_interval
-    plot(xpts(intervals{i}), fx(intervals{i}),'r--');
-  end
-  hold off
-  legend('qsp',opts.fname)
-  xlabel('x');
-  set(gca,'fontsize',16)
-  title(sprintf('deg=%d',deg))
-  print([fname,'func'],'-dpng')
-
-  figure(3)
-  clf
-  hold on
-  for i = 1 : n_interval
-    plot(xpts(intervals{i}), fx(intervals{i}) - yqsp(intervals{i}),'k-');
-  end
-  hold off
-  legend('Error')
-  xlabel('x');
-  set(gca,'fontsize',16)
-  title(sprintf('deg=%d',deg))
-  print([fname,'diff'],'-dpng')
-
-  pause
 end
