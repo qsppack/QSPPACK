@@ -44,7 +44,7 @@ while step_err > opts.criteria && step_count < opts.maxiter
     step_count = step_count + 1;
 end
 
-phi_full = rdc_phase_factor_to_full(phi, parity);
+phi_full = rdc_phase_factor_to_full(phi, parity,opts.targetPre);
 runtime = toc;
 end
 

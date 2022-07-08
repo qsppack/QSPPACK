@@ -35,13 +35,18 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 
 if ~isfield(opts,'criteria');              opts.criteria = 1e-12; end
 if ~isfield(opts,'useReal');               opts.useReal = true; end
+if ~isfield(opts,'targetPre');             opts.targetPre = true;    end
 
 %--------------------------------------------------------------------------
 % initial preparation
 
 tot_len = length(coef);
 delta = cos((1:2:(2*tot_len-1))*(pi/2/(2*tot_len)))';
-opts.target = @(x, opts) ChebyCoef2Func(x, coef, parity, true);
+if (opts.targetPre == false)
+    opts.target = @(x, opts) -ChebyCoef2Func(x, coef, parity, true);
+else 
+    opts.target = @(x, opts) ChebyCoef2Func(x, coef, parity, true);
+end
 opts.parity = parity;
 obj = @QSPObj_sym;
 if (opts.useReal == true)
@@ -50,14 +55,15 @@ else
     grad = @QSPGrad_sym;
 end
 
-
 %--------------------------------------------------------------------------
 % solve by L-BFGS with selected initial point
 
 tic;
 [phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,zeros(tot_len,1),opts);
 % add pi/4 at the end
-phi(end) = phi(end) + pi/4;
+if (opts.targetPre == true)
+    phi(end) = phi(end) + pi/4;
+end
 % construct full phase factors
 if( parity == 0 )
   phi_proc = zeros(2*length(phi)-1,1);

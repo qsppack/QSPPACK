@@ -23,7 +23,7 @@ function [phi_full, step_err, step_count, runtime] = CM_solver(coef, parity, opt
 % setup options for CM solver
 if ~isfield(opts,'maxiter');              opts.maxiter = 1e5; end
 if ~isfield(opts,'criteria');             opts.criteria = 1e-12; end
-if ~isfield(opts,'targetPre');                  opts.targetPre = true;    end
+if ~isfield(opts,'targetPre');            opts.targetPre = true;    end
 if ~isfield(opts,'useReal');              opts.useReal = true; end
 
 
@@ -50,6 +50,6 @@ while step_err > opts.criteria && step_count < opts.maxiter
     step_count = step_count + 1;
 end
 
-phi_full = rdc_phase_factor_to_full(phi, parity);
+phi_full = rdc_phase_factor_to_full(phi, parity,opts.targetPre);
 runtime = toc;
 end
