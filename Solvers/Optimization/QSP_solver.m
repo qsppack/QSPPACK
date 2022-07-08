@@ -34,6 +34,7 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 % setup options for L-BFGS solver
 
 if ~isfield(opts,'criteria');              opts.criteria = 1e-12; end
+if ~isfield(opts,'useReal');               opts.useReal = true; end
 
 %--------------------------------------------------------------------------
 % initial preparation
@@ -43,7 +44,12 @@ delta = cos((1:2:(2*tot_len-1))*(pi/2/(2*tot_len)))';
 opts.target = @(x, opts) ChebyCoef2Func(x, coef, parity, true);
 opts.parity = parity;
 obj = @QSPObj_sym;
-grad = @QSPGrad_sym;
+if (opts.useReal == true)
+    grad = @QSPGrad_sym_real;
+else
+    grad = @QSPGrad_sym;
+end
+
 
 %--------------------------------------------------------------------------
 % solve by L-BFGS with selected initial point
