@@ -15,7 +15,11 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 %                should be even/odd, only provide non-zero coefficients
 %     parity --- Parity of polynomial P (0 -- even, 1 -- odd)
 %       opts --- Options structure with fields
-%                criteria: stop criteria 
+%                criteria: stop criteria  
+%                useReal: use only real arithmetics if true
+%                targetPre: want Pre to be target function if true
+%                method: choose from 'LBFGS', 'CM', or 'Newton'
+%                typePhi: full or reduced phase factors
 %
 % Output:
 %    phi_proc --- Solution of optimization problem, FULL phase factors
@@ -26,60 +30,70 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 % Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
 %            Efficient Phase Factor Evaluation in Quantum Signal Processing
 %
-% Author: Xiang Meng, Yulong Dong
-% Version 1.0
-% Last Update 06/2020
+% Version 2.0
+% Last Update 07/2022
 %
 %--------------------------------------------------------------------------
 % setup options for L-BFGS solver
-
+if ~isfield(opts,'maxiter');               opts.maxiter = 5e4; end
 if ~isfield(opts,'criteria');              opts.criteria = 1e-12; end
 if ~isfield(opts,'useReal');               opts.useReal = true; end
 if ~isfield(opts,'targetPre');             opts.targetPre = true;    end
+if ~isfield(opts,'method');                opts.method = 'CM'; end
+if ~isfield(opts,'typePhi');               opts.typePhi = 'full'; end
 
-%--------------------------------------------------------------------------
-% initial preparation
 
-tot_len = length(coef);
-delta = cos((1:2:(2*tot_len-1))*(pi/2/(2*tot_len)))';
-if (opts.targetPre == false)
-    opts.target = @(x, opts) -ChebyCoef2Func(x, coef, parity, true);
-else 
-    opts.target = @(x, opts) ChebyCoef2Func(x, coef, parity, true);
-end
-opts.parity = parity;
-obj = @QSPObj_sym;
-if (opts.useReal == true)
-    grad = @QSPGrad_sym_real;
+if strcmp(opts.method,'LBFGS')
+    
+    %--------------------------------------------------------------------------
+    % initial preparation
+    
+    tot_len = length(coef);
+    delta = cos((1:2:(2*tot_len-1))*(pi/2/(2*tot_len)))';
+    if (opts.targetPre == false)
+        opts.target = @(x, opts) -ChebyCoef2Func(x, coef, parity, true);
+    else
+        opts.target = @(x, opts) ChebyCoef2Func(x, coef, parity, true);
+    end
+    opts.parity = parity;
+    obj = @QSPObj_sym;
+    if (opts.useReal == true)
+        grad = @QSPGrad_sym_real;
+    else
+        grad = @QSPGrad_sym;
+    end
+    
+    %--------------------------------------------------------------------------
+    % solve by L-BFGS with selected initial point
+    
+    tic;
+    [phi,err,iter] = QSP_LBFGS(obj,grad,delta,zeros(tot_len,1),opts);
+    % convert phi to reduced phase factors
+    if( parity == 0 )
+        phi(1) = phi(1)/2;
+    end
+    runtime = toc;
+
+elseif strcmp(opts.method,'CM')
+    [phi, err, iter, runtime] = QSP_CM(coef, parity, opts);
+    
+elseif strcmp(opts.method, 'Newton')
+    [phi, err, iter, runtime] = QSP_Newton(coef, parity, opts);
 else
-    grad = @QSPGrad_sym;
+    fprintf("Assigned method doesn't exist. Please choose method from 'LBFGS', 'CM' or 'Newton'.\n");
 end
-
-%--------------------------------------------------------------------------
-% solve by L-BFGS with selected initial point
-
-tic;
-[phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,zeros(tot_len,1),opts);
-% add pi/4 at the end
-if (opts.targetPre == true)
-    phi(end) = phi(end) + pi/4;
-end
-% construct full phase factors
-if( parity == 0 )
-  phi_proc = zeros(2*length(phi)-1,1);
-  phi_proc(1:(length(phi)-1)) = phi(end:-1:2);
-  phi_proc(length(phi):end)=phi;
-else
-  phi_proc = zeros(2*length(phi),1);
-  phi_proc(1:length(phi)) = phi(end:-1:1);
-  phi_proc(length(phi)+1:end) = phi;
-end
-time = toc;
 
 %--------------------------------------------------------------------------
 % output information
 
-out.time = time;
-out.value = obj_value;
+out.iter = iter;
+out.time = runtime;
+out.value = err;
+
+if strcmp(opts.typePhi,'full')
+    phi_proc = rdc_phase_factor_to_full(phi, parity, opts.targetPre);
+else
+    phi_proc = phi;
+end
 
 end
