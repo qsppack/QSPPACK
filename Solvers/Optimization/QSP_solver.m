@@ -89,11 +89,15 @@ end
 out.iter = iter;
 out.time = runtime;
 out.value = err;
+out.parity = parity;
+out.targetPre = opts.targetPre;
 
 if strcmp(opts.typePhi,'full')
     phi_proc = rdc_phase_factor_to_full(phi, parity, opts.targetPre);
+    out.typePhi = 'full';
 else
     phi_proc = phi;
+    out.typePhi = 'reduced';
 end
 
 end
