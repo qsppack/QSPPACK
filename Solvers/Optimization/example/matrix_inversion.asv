@@ -73,27 +73,25 @@ ylabel('$g(x,\Phi^*)-f_\mathrm{poly}(x)$', 'Interpreter', 'latex')
 print(gcf,'quantum_linear_system_problem_error.png','-dpng','-r500');
 
 figure()
-tiledlayout(1,2)
-nexttile
+plot(xlist,func_value-target_value)
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
+print(gcf,'quantum_linear_system_problem_polynomial_error.png','-dpng','-r500');
+
+figure()
 hold on
-xlist1 = linspace(0.5/kappa,1,500)';
-targ_value1 = targ(xlist1);
-plot(xlist1,targ_value1,'b-')
-plot(-xlist1,-targ_value1,'b-')
-xlist1 = linspace(-1,1,1000)';
-func_value1 = func(xlist1);
-plot(xlist1,func_value1,'-')
+xlist = linspace(0.5/kappa,1,500)';
+targ_value = targ(xlist);
+plot(xlist,targ_value,'b-')
+plot(-xlist,-targ_value,'b-')
+xlist = linspace(-1,1,1000)';
+func_value = func(xlist);
+plot(xlist,func_value,'-')
 hold off
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$f(x)$', 'Interpreter', 'latex')
 legend('target function', '', 'polynomial approximation')
-
-nexttile
-plot(xlist,func_value-targ_value)
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
 print(gcf,'quantum_linear_system_problem_polynomial.png','-dpng','-r500');
-
 
 
 

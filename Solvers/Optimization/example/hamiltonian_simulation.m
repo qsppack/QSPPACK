@@ -37,7 +37,7 @@ opts.criteria = 1e-12;
 
 %%
 % Set |opts.useReal| to be |true| will increase the computing speed.
-opts.useReal = false;
+opts.useReal = true;
 
 %%
 % We want the real component of the upper left entry of the QSP unitary
@@ -52,11 +52,15 @@ opts.method = 'CM';
 %%
 % We do the following test to demonstrate that the obtained phase factors 
 % satisfy expectation.
-xlist = rand(100,1)*2-1;
+xlist = linspace(0, 1, 1000)';
 targ_value = targ(xlist);
 QSP_value = QSPGetEntry(xlist, phi_proc, out);
-err= norm(QSP_value-targ_value,1)/100;
-disp('the residual error is');
+err= norm(QSP_value-targ_value,1)/length(xlist);
+disp('The residual error is');
 disp(err);
 
+plot(xlist,QSP_value-targ_value)
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$g(x,\Phi^*)-f(x)$', 'Interpreter', 'latex')
+print(gcf,'hamiltonian_simulation.png','-dpng','-r500');
 
