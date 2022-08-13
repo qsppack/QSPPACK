@@ -5,9 +5,10 @@
 % (example/matrix_inversion.m)
 
 %% 
-% In Matrix inversion, the function of our interest is $f(x)=1/x$. To
+% In matrix inversion, the function of our interest is $f(x)=1/x$. To
 % implement QSP, we need a polynomial approximation of $1/x$ over interval
-% $D_{\kappa}:=[1/\kappa, 1]$.
+% $D_{\kappa}:=[1/\kappa, 1]$. Here $\kappa>1$ is the condition number
+% of a matrix.
 
 %%
 % As an example, consider function $\frac{1}{20x}$
@@ -21,7 +22,9 @@ targ = @(x) (1/(2*kappa))./x;
 % coefficients of the best approximation polynomial.
 
 %%
-% $\min_{f\in R[x], deg(f)\leq d} \max_{x\in D_{\kappa}} |f(x)-1/x|$
+%
+% $$\min_{f\in R[x], \deg(f)\leq d} \max_{x\in D_{\kappa}} |f(x)-1/x|$$
+%
 % subject to $\max_{x\in[0,1]} |f(x)|\leq 1-\epsilon$.
 opts.intervals=[1/kappa,1];
 opts.objnorm = Inf;
