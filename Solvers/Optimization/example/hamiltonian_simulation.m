@@ -11,14 +11,14 @@
 % Thus we only need to determine the phase factors corresponding to those polynomials approximating $\cos(\tau x)$ and $\sin(\tau x)$. 
 
 %% Approxiomating the real compenent
-% As an example, consider function $0.5*\cos(100 x)$, whose $L^{\infty}
+% Consider the real part $0.5\cos(100 x)$, whose $L^{\infty}$
 % norm over $[-1,1]$ is strictly bounded by $\frac{1}{2}$.
 parity = 0;
 tau = 100;
 targ = @(x) 0.5*cos(tau.*x);
 
 %%
-% |chebfun| provides its Chebyshev coefficients. We truncate the series up
+% The Chebyshev coefficients can be computed using |chebfun|. We truncate the series up
 % to $d=1.4| \tau |+\log(1/\epsilon_0)$ such that the approximation error is 
 % bounded by $\epsilon_0$.
 d = ceil(1.4*tau+log(1e14));
