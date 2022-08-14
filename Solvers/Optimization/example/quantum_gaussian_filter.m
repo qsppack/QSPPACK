@@ -22,7 +22,9 @@
 
 %%  
 % For numerical demonstration, we consider even function 
+%
 % $$0.8*e^{-(|x|-0.5)^2/3}$$ 
+%
 % whose $l^{\infty}$ norm over $[-1,1]$ is strictly bounded by $0.8$.
 
 parity = 0;
