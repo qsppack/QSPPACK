@@ -27,10 +27,11 @@ parity = mod(deg, 2);
 epsil = opts.epsil;
 npts = opts.npts;
 
-[xpts, wpts] = chebpts(2*npts);
-ind = find(xpts>0);
-xpts = xpts(ind);
-wpts = wpts(ind)';
+[xpts, ~] = chebpts(2*npts);
+xpts = xpts(xpts>0);
+% ind = find(xpts>0);
+% xpts = xpts(ind);
+% wpts = wpts(ind)';
 
 n_interval = length(opts.intervals) / 2;
 ind_union = [];
@@ -96,25 +97,28 @@ if( opts.isplot )
   figure(1)
   clf
   hold on
-  plot(xpts, opts.fscale * func(xpts), 'r--' )
-  plot(xpts, y, 'b-' )
+  h1=plot(xpts, opts.fscale * func(xpts), 'r--','LineWidth',1.5);
+  h2=plot(xpts, y, 'b-', 'LineWidth',1.5);
   for i = 1 : n_interval
     % plot(xpts(intervals{i}), fx(intervals{i}),'r--')
-    plot(xpts(intervals{i}), y(intervals{i}),'b-o')
+    plot(xpts(intervals{i}), y(intervals{i}),'b-o','LineWidth',1.5)
   end
   hold off
-  xlabel('x');
-  ylabel('f');
+  xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
+  ylabel('$f(x)$', 'Interpreter', 'latex', 'FontSize', 15);
+  legend([h1 h2],{'target function','polynomial approximation'},'FontSize', 15);
+
 
   figure(2)
   clf
   hold on
   for i = 1 : n_interval
-    plot(xpts(intervals{i}), abs(y(intervals{i})-fx(intervals{i})), 'k-')
+    plot(xpts(intervals{i}), abs(y(intervals{i})-fx(intervals{i})), 'k-',...
+        'LineWidth',1.5)
   end
   hold off
-  xlabel('x');
-  ylabel('error');
+  xlabel('$x$', 'Interpreter', 'latex','FontSize', 15);
+  ylabel('$|f_\mathrm{poly}(x)-f(x)|$', 'Interpreter', 'latex','FontSize', 15);
 end
 
 %% Compute the QSP phase factors

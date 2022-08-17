@@ -12,13 +12,15 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 %
 % Input:
 %       coef --- Coefficients of polynomial P under Chevyshev basis, P
-%                should be even/odd, only provide non-zero coefficients
+%                should be even/odd, only provide non-zero coefficients.
+%                Coefficients should be ranked from low order term to high
+%                order term.
 %     parity --- Parity of polynomial P (0 -- even, 1 -- odd)
 %       opts --- Options structure with fields
 %                criteria: stop criteria  
 %                useReal: use only real arithmetics if true
 %                targetPre: want Pre to be target function if true
-%                method: choose from 'LBFGS', 'CM', or 'Newton'
+%                method: choose from 'LBFGS', 'FPI', or 'Newton'
 %                typePhi: full or reduced phase factors
 %
 % Output:
@@ -31,7 +33,7 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 %            Efficient Phase Factor Evaluation in Quantum Signal Processing
 %
 % Version 2.0
-% Last Update 07/2022
+% Last Update 08/2022
 %
 %--------------------------------------------------------------------------
 % setup options for L-BFGS solver
@@ -39,7 +41,7 @@ if ~isfield(opts,'maxiter');               opts.maxiter = 5e4; end
 if ~isfield(opts,'criteria');              opts.criteria = 1e-12; end
 if ~isfield(opts,'useReal');               opts.useReal = true; end
 if ~isfield(opts,'targetPre');             opts.targetPre = true;    end
-if ~isfield(opts,'method');                opts.method = 'CM'; end
+if ~isfield(opts,'method');                opts.method = 'FPI'; end
 if ~isfield(opts,'typePhi');               opts.typePhi = 'full'; end
 
 
@@ -74,13 +76,13 @@ if strcmp(opts.method,'LBFGS')
     end
     runtime = toc;
 
-elseif strcmp(opts.method,'CM')
+elseif strcmp(opts.method,'FPI')
     [phi, err, iter, runtime] = QSP_CM(coef, parity, opts);
     
 elseif strcmp(opts.method, 'Newton')
     [phi, err, iter, runtime] = QSP_Newton(coef, parity, opts);
 else
-    fprintf("Assigned method doesn't exist. Please choose method from 'LBFGS', 'CM' or 'Newton'.\n");
+    fprintf("Assigned method doesn't exist. Please choose method from 'LBFGS', 'FPI' or 'Newton'.\n");
 end
 
 %--------------------------------------------------------------------------

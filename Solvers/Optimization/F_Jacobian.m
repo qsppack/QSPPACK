@@ -5,12 +5,11 @@ function [f,df] = F_Jacobian(phi, parity,opts)
 
 % Input:
 %       phi --- reduced phase factors 
-%     theta --- vector
 %    parity --- Parity of phi (0 -- even, 1 -- odd)
 %
 % Output:
-%         f --- F value at the point cos(theta)
-%        df --- Jacobian matrix value at the point cos(theta)
+%         f --- F(phi)
+%        df --- DF(phi)
 %                  
 %--------------------------------------------------------------------------
 % setup options 

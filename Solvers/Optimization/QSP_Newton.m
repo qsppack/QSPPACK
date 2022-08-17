@@ -13,7 +13,10 @@ function [phi, err, iter, runtime] = QSP_Newton(coef,parity,opts)
 %                   useReal: use real matrix mulplitcation to get QSP entry
 %
 % Output:
-%     phi_full --- full set of phase factors
+%       phi --- reduced phase factors
+%       err --- error (1 norm)
+%      iter --- iteration number
+%   runtime --- time used 
 %                  
 %--------------------------------------------------------------------------
 % setup options for Newton solver
@@ -48,26 +51,25 @@ if (opts.targetPre == true)
     coef = - coef; % inverse is necessary
 end
 phi = coef/2;
-err = inf;
 iter = 0;
 
 %--------------------------------------------------------------------------
 % solve by Newton method
 
-while err > crit && iter < maxiter
+while true
     [Fval,DFval] = F_Jacobian(phi, parity,opts);
     res = Fval - coef;
-    phi = phi - DFval\res;
     err = norm(res, 1);
     iter = iter + 1;
+    if iter>=maxiter; fprintf("Max iteration reached.\n"); break; end
+    if err<crit; fprintf("Stop criteria satisfied.\n"); break; end
+    phi = phi - DFval\res;
     if(pri&&mod(iter,itprint)==0)
         if(iter==1||mod(iter-itprint,itprint*10)==0)
             fprintf("%s",str_head);
         end
         fprintf(str_num,iter,err);
     end
-    if iter>=maxiter; fprintf("Max iteration reached.\n"); break; end
-    if err<crit; fprintf("Stop criteria satisfied.\n"); break; end
 end
 
 runtime = toc;

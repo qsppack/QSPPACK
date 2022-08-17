@@ -8,7 +8,7 @@ function coe = F(phi, parity, opts)
 %       parity --- Parity of phi (0 -- even, 1 -- odd)
 %
 % Output:
-%            y --- Chebyshev coefficients of P_im w.r.t. 
+%          coe --- Chebyshev coefficients of P_im w.r.t. 
 %                  T_(2k) -- even, or T_(2k-1) -- odd
 %                  
 %--------------------------------------------------------------------------

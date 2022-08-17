@@ -4,7 +4,9 @@ function qspmat = QSPGetUnit_sym(phi, x, parity)
 % x \in [-1, 1]
 %
 % Input:
-%       phi --- The phase factors 
+%       phi --- The last half of phase factors (If parity == 1, then phi is
+%               the reduced phase factor. If parity == 0, then phi(1) is
+%               different from the reduced phase factors by a factor of 2.)
 %         x --- Point to be evaluated
 %    parity --- Parity of phi (0 -- even, 1 -- odd)
 %
