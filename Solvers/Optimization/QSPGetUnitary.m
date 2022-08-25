@@ -9,10 +9,7 @@
 %       targ    -- QSP approximation of target, real(ret(1, 1))
 %
 % ----------------------------------------------------------------------
-%
-% Author:           Yulong Dong, dongyl@berkeley.edu
-% Version:          1.1
-% Last revision:    3/11/2020
+% Author:           Yulong Dong      update 3/11/2020
 %
 %  ----------------------------------------------------------------------
 

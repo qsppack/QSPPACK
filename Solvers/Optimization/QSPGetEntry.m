@@ -12,6 +12,10 @@
 %       ret    -- QSP approximation of target
 %
 % ----------------------------------------------------------------------
+%
+% Author:     Jiasu Wang   update 07/2020
+% 
+%--------------------------------------------------------------------------
 
 function ret= QSPGetEntry(xlist, phase, opts)
 

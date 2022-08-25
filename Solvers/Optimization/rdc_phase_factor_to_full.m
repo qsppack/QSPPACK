@@ -2,6 +2,9 @@ function [phi_full] = rdc_phase_factor_to_full(phi_cm, parity,targetPre)
 %--------------------------------------------------------------------------
 % construct the full phase factors from reduced phase factors             
 %--------------------------------------------------------------------------
+% Author:     Jiasu Wang     update 07/2022
+%
+%--------------------------------------------------------------------------
 
 phi_right = phi_cm;
 if (targetPre==true)

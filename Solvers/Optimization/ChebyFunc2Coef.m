@@ -9,6 +9,10 @@ function c = ChebyFunc2Coef(func, maxorder)
 %       c --- Chebyshev coefficients up to maxorder
 %
 % ----------------------------------------------------------------------
+% Author:           Hongkang Ni  update 04/2022
+%                   Jiasu Wang   update 06/2022
+%
+% ----------------------------------------------------------------------
 
     M = maxorder;       
     theta = zeros(2*M,1);

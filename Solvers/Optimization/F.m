@@ -10,6 +10,9 @@ function coe = F(phi, parity, opts)
 % Output:
 %          coe --- Chebyshev coefficients of P_im w.r.t. 
 %                  T_(2k) -- even, or T_(2k-1) -- odd
+% ----------------------------------------------------------------------
+% Author:     Hongkang Ni   update 04/2022
+%             Jiasu Wang    update 07/2022
 %                  
 %--------------------------------------------------------------------------
 % setup options for CM solver

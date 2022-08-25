@@ -11,6 +11,9 @@ function plot_phase_factor_decay(Phi,coef,opts)
 %       h --- Chebyshev coefficients up to maxorder
 %
 % ----------------------------------------------------------------------
+% Author:           Jiasu Wang  update 08/2022
+%                   
+% ----------------------------------------------------------------------
 if strcmp(opts.typePhi,'full')
     d = ceil((length(Phi)+1)/2);
     phi = Phi(d:end);

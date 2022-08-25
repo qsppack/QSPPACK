@@ -10,7 +10,10 @@ function [f,df] = F_Jacobian(phi, parity,opts)
 % Output:
 %         f --- F(phi)
 %        df --- DF(phi)
-%                  
+%  
+% ----------------------------------------------------------------------
+% Author:    Jiasu Wang   update 07/2022
+%
 %--------------------------------------------------------------------------
 % setup options 
 if ~isfield(opts,'useReal');              opts.useReal = true; end

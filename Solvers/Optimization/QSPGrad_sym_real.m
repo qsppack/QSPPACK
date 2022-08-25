@@ -14,6 +14,9 @@ function [grad, obj] = QSPGrad_sym_real(phi,delta,opts)
 %        grad --- Gradient of obj function
 %         obj --- Objective function value
 %
+% ----------------------------------------------------------------------
+% Author:    Jiasu Wang  update 07/2022
+%
 %--------------------------------------------------------------------------
 % initial computation
 

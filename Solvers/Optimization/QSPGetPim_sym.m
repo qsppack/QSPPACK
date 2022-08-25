@@ -12,7 +12,9 @@ function Pim = QSPGetPim_sym(phi, y, parity)
 %       Pim --- The imaginary part of the (1,1) element of the QSP unitary 
 %               matrix at point y.
 %--------------------------------------------------------------------------
-
+% Author:     Jiasu Wang   update 07/2022
+% 
+%--------------------------------------------------------------------------
 
 Pim = y;
 phi = phi(end:-1:1);

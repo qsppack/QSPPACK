@@ -18,6 +18,9 @@ function [phi, err, iter, runtime] = QSP_CM(coef, parity, opts)
 %       err --- error (1 norm)
 %      iter --- iteration number
 %   runtime --- time used 
+%--------------------------------------------------------------------------
+% Author:     Hongkang Ni   update 05/2022
+%             Jiasu Wang    update 07/2022
 %                  
 %--------------------------------------------------------------------------
 % setup options for CM solver

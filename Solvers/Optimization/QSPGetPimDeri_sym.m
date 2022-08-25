@@ -14,6 +14,9 @@ function y = QSPGetPimDeri_sym(phi, x, parity)
 %            y --- Pim and its Jacobian matrix value at the point x
 %                  
 %--------------------------------------------------------------------------
+% Author:     Jiasu Wang   update 07/2022
+% 
+%--------------------------------------------------------------------------
 
 d = length(phi);
 expphi = exp(1j*phi);

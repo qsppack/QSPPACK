@@ -10,10 +10,7 @@
 %       ret     -- function at x
 %
 % ----------------------------------------------------------------------
-%
-% Author:           Yulong Dong, dongyl@berkeley.edu
-% Version:          1.0
-% Last revision:    06/2020
+% Author:           Yulong Dong  update 06/2020
 %
 % ----------------------------------------------------------------------
 

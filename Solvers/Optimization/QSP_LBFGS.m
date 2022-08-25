@@ -28,9 +28,9 @@ function [phi,obj_value,iter] = QSP_LBFGS(obj,grad,delta,phi,opts)
 %
 % Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
 %            Efficient Phase Factor Evaluation in Quantum Signal Processing
-%
-% Version 2.0
-% Last Update 07/2022
+%--------------------------------------------------------------------------
+% Author:      Xiang Meng, Yulong Dong  update 02/2020
+%              Jiasu Wang               update 07/2022
 %
 %--------------------------------------------------------------------------
 % options for L-BFGS solver

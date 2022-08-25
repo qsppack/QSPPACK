@@ -1,6 +1,18 @@
 function [coef_full] = cvx_poly_coef(func, deg, opts)
 %% Find a polynomial approximation for a given function.
+%--------------------------------------------------------------------------
 %
+% Input:
+%       func, deg, opts
+% Output:
+%       c --- Chebyshev coefficients of best approximation polynomial
+%
+% ----------------------------------------------------------------------
+% Author:           Lin Lin      update 06/2022
+%                   Jiasu Wang   update 08/2022
+%
+% ----------------------------------------------------------------------
+
 
 if( ~isfield(opts, 'npts') )
   opts.npts = 200;

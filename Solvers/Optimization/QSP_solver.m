@@ -32,8 +32,8 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 % Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
 %            Efficient Phase Factor Evaluation in Quantum Signal Processing
 %
-% Version 2.0
-% Last Update 08/2022
+% Author:         Xiang Meng, Yulong Dong   update 06/2020
+%                 Jiasu Wang                update 07/2022
 %
 %--------------------------------------------------------------------------
 % setup options for L-BFGS solver

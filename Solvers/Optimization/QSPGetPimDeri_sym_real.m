@@ -14,6 +14,10 @@ function y = QSPGetPimDeri_sym_real(phi, x, parity)
 %            y --- Pim and its Jacobian matrix value at the point x
 %                  
 %--------------------------------------------------------------------------
+% Author:      Hongkang Ni  update 04/2022
+%              Jiasu Wang   update 07/2022
+% 
+%--------------------------------------------------------------------------
 
 n = length(phi);
 theta = acos(x);

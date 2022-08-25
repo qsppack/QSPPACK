@@ -17,6 +17,11 @@ function [phi, err, iter, runtime] = QSP_Newton(coef,parity,opts)
 %       err --- error (1 norm)
 %      iter --- iteration number
 %   runtime --- time used 
+%
+%--------------------------------------------------------------------------
+%
+% Author:     Hongkang Ni   update 05/2022
+%             Jiasu Wang    update 07/2022
 %                  
 %--------------------------------------------------------------------------
 % setup options for Newton solver
