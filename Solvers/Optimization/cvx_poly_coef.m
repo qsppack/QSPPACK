@@ -40,10 +40,7 @@ epsil = opts.epsil;
 npts = opts.npts;
 
 [xpts, ~] = chebpts(2*npts);
-xpts = xpts(xpts>0);
-% ind = find(xpts>0);
-% xpts = xpts(ind);
-% wpts = wpts(ind)';
+xpts = xpts(xpts>=0);
 
 n_interval = length(opts.intervals) / 2;
 ind_union = [];

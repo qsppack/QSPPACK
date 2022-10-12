@@ -5,13 +5,13 @@
 % (example/matrix_inversion.m)
 
 %% 
-% In matrix inversion, the function of our interest is $f(x)=1/x$. To
+% In matrix inversion, the function of interest is $f(x)=1/x$. To
 % implement QSP, we need a polynomial approximation of $1/x$ over interval
 % $D_{\kappa}:=[1/\kappa, 1]$. Here $\kappa>1$ is the condition number
 % of a matrix.
 
 %%
-% As an example, consider function $\frac{1}{20x}$
+% As an example, consider $\frac{1}{20x}$
 kappa = 10;
 targ = @(x) (1/(2*kappa))./x;
 
@@ -28,13 +28,13 @@ targ = @(x) (1/(2*kappa))./x;
 % subject to $\max_{x\in[0,1]} |f(x)|\leq 1-\epsilon$.
 opts.intervals=[1/kappa,1];
 opts.objnorm = Inf;
-opts.epsil = 0.2;
+opts.epsil = 0.1;
 opts.npts = 500;
 % opts.isplot = false;
 deg = 151;
 
 %%
-% Since the $L^{\infty}$ norm of target function is bounded by 0.5, hence
+% Since the $L^{\infty}$ norm of target function is bounded by 0.5, 
 % we don't need rescale the target function and |opts.fscale| is set to be
 % 1.
 opts.fscale = 1;
@@ -60,7 +60,7 @@ opts.method = 'Newton';
 %%
 % We do the following test to demonstrate that the obtained phase factors 
 % satisfy expectation.
-xlist = linspace(0.1,1,1000)';
+xlist = linspace(1/kappa,1,1000)';
 func = @(x) ChebyCoef2Func(x, coef, parity, true);
 targ_value = targ(xlist);
 func_value = func(xlist);
@@ -75,9 +75,9 @@ xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f_\mathrm{poly}(x)$', 'Interpreter', 'latex')
 print(gcf,'quantum_linear_system_problem_error.png','-dpng','-r500');
 
+%%
+% Show the quality of polynomial approximation.
 figure()
-tiledlayout(1,2)
-nexttile
 hold on
 xlist1 = linspace(0.5/kappa,1,500)';
 targ_value1 = targ(xlist1);
@@ -89,9 +89,10 @@ plot(xlist1,func_value1,'-')
 hold off
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$f(x)$', 'Interpreter', 'latex')
-legend('target function', '', 'polynomial approximation')
+legend('target function', '', 'polynomial approximation',...
+  'location','se')
 
-nexttile
+figure()
 plot(xlist,func_value-targ_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
