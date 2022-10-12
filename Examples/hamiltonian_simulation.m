@@ -5,9 +5,10 @@
 % (example/hamiltonian_simulation.m)
 
 %% Hamiltonian simulation
-% In Hamiltonian simulation, the function of our interest is $f(x)=e^{-i\tau x}$.
-% In practice, one always consider implementing the real and imaginary component of the complex polynomial individually
-% and then combine them by linear combination of unitaries.
+% In Hamiltonian simulation, the function of interest is $f(x)=e^{-i\tau
+% x}$.  In practice, the real and imaginary component of the complex
+% polynomial is implemented separately, and are then combined by linear
+% combination of unitaries.
 % Thus we only need to determine the phase factors corresponding to those polynomials approximating $\cos(\tau x)$ and $\sin(\tau x)$. 
 
 %% Approxiomating the real compenent
@@ -31,7 +32,7 @@ coef = chebcoeffs(f);
 coef = coef(parity+1:2:end);
 
 %%
-% Set up the parameters for solver.
+% Set up the parameters for the solver.
 opts.maxiter = 100;
 opts.criteria = 1e-12;
 
@@ -45,8 +46,8 @@ opts.useReal = true;
 opts.targetPre = true;
 
 %%
-% Use Contraction mapping method to find phase factors
-opts.method = 'CM';
+% Use the fixed point iteration method to find phase factors
+opts.method = 'FPI';
 [phi_proc,out] = QSP_solver(coef,parity,opts);
 
 %%
