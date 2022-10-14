@@ -40,14 +40,22 @@ epsil = opts.epsil;
 npts = opts.npts;
 
 [xpts, ~] = chebpts(2*npts);
+xpts=union(xpts,opts.intervals');
 xpts = xpts(xpts>=0);
+npts = length(xpts);
 
 n_interval = length(opts.intervals) / 2;
 ind_union = [];
 for i = 1 : n_interval
-  intervals{i} = find((xpts >= opts.intervals(2*i-1)) &...
+  ind_set = find((xpts >= opts.intervals(2*i-1)) &...
     (xpts<=opts.intervals(2*i)));
-  ind_union = union(ind_union, intervals{i});
+%   if ind_set(1)>1
+%       ind_set=[ind_set(1)-1;ind_set];
+%   end
+%   if ind_set(end)<npts
+%       ind_set=[ind_set;ind_set(end)+1];
+%   end    
+  ind_union = union(ind_union, ind_set);
 end
 
 
@@ -62,6 +70,7 @@ if( parity == 0 )
 else
   n_coef = (deg + 1) / 2;
 end
+
 Ax = zeros(npts, n_coef);
 for k = 1 : n_coef
   if( parity == 0 )
