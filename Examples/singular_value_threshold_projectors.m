@@ -1,4 +1,4 @@
-%% Singular value threshold projectors)
+%% Singular value threshold projectors
 
 %%
 % (example/singular_value_threshold_projectors.m)
@@ -14,6 +14,7 @@
 % and all diagonal entries $\Sigma_{ii}\notin S$ by 0. We define
 % $\Pi_S:=\Pi V\Sigma_S V^{\dagger}\Pi$ and similarly 
 % $\tilde{\Pi}_S:=\tilde{\Pi} W\Sigma_S W^{\dagger}\tilde{\Pi}$.
+%
 % For example, set $S=[0,\delta]$ and $\Pi_S$ projects out right
 % singular vectors with singular value at most $\delta$.
 % These threshold projectors play a major role in quantum algorithms.
@@ -25,25 +26,26 @@
 % it at least $b$.
 
 %%
-% As an example, we set $\delta =0.5$. To implement $\Pi_{[0,0.5]}$, we need 
+% As an example, we implement $\Pi_{[0,0.5]}$. We need 
 % to implement singular value transformation of $A$ for the following 
-% rectangle function. The target function is scaled by a factor of $0.8$ 
-% for the numerical stability.
-targ = @(x) 0.8*rectangularPulse(-0.5,0.5,x);
+% rectangle function. 
+targ = @(x) rectangularPulse(-0.5,0.5,x);
 
 %%
-% We call a subroutine to find the best even polynomial approximating 
-% $f(x)$ on the interval 
-% $$D_{\delta}=[0, 0.5-\delta]\cup [0.5+\delta,1].$$ 
-% we solves the problem by convex 
-% optimization. Here are the parameters set for the subroutine.
+% We call a subroutine to find the best even polynomial approximating
+% $f(x)$ on the interval
+%
+% $$D_{\delta}=[0, 0.5-\delta]\cup [0.5+\delta,1].$$
+%
+% We solve the problem by convex optimization. Here are the parameters set
+% for the subroutine.
 delta=0.05;
 opts.intervals=[0,0.5-delta,0.5+delta,1];
 opts.objnorm = Inf;
 opts.epsil = 0.1;
 opts.npts = 500;
 opts.isplot= true;
-opts.fscale = 1; % disable further rescaling of f(x)
+opts.fscale = 0.9; % scaling factor for the infinity norm
 
 parity = 0;
 deg = 250;
@@ -72,9 +74,10 @@ opts.method = 'Newton';
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
 % terms of the normalized $l^{\infty}$ norm
+%
 % $$residual\_norm = \max_{k=1,\cdots,K} |g(x_k,\Phi^*)-f_{poly}(x_k)|$$
-% Using 1000 equally spaced points, the residual error is $5.2558e-13$
-% which attains almost machine precision. We also plot the pointwise error.
+
+
 
 xlist1 = linspace(0,0.5-delta,500)';
 xlist2 = linspace(0.5+delta,1,500)';
@@ -93,5 +96,3 @@ plot(xlist,QSP_value-func_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f_\mathrm{poly}(x)$', 'Interpreter', 'latex')
 print(gcf,'singular_value_threshold_projectors_error.png','-dpng','-r500');
-
-

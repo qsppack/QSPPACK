@@ -1,5 +1,4 @@
 %% Quantum Gaussian filter
-% Jiasu Wang, July 2022
 
 %%
 % (example/quantum_gaussian_filter.m)

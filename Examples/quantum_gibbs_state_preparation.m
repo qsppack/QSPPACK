@@ -1,5 +1,4 @@
 %% Quantum Gibbs state preparation
-% Jiasu Wang, July 2022
 
 %%
 % (example/quantum_gibbs_state_preparation.m)
@@ -9,16 +8,19 @@
 % computation and has wide-ranging applications in various areas, including 
 % quantum simulation, quantum optimization, and quantum machine learning. 
 % The Gibbs state for a quantum Hamiltonian $H$ is defined as the density 
-% operator $$\rho = \frac{e^{-\beta H}}{tr(e^{-\beta H})}$$
+% operator 
+%
+% $$\rho = \frac{e^{-\beta H}}{tr(e^{-\beta H})}$$
+%
 % The basic idea for preparing Gibbs state is approximately implementing 
-% the map $ H \to e^{-\beta H}$. 
+% the map $H \to e^{-\beta H}$. 
 
 %%
 % In QSP, we only need to consider the scalar function $f(x)=e^{-\beta x}$. 
 % Without loss of generality, we assume the matrix is normalized so that 
 % $\|H\|\leq 1$. Besides, the eigenvalues of $H$ lie in the interval
-% $$ D_{\delta}:=[\delta, 1] $$
-% Hence, we have to find an odd polynomial approximation over $D_{\delta}$.
+% $D_{\delta}:=[\delta, 1]$. 
+% Hence, we need to find an odd polynomial approximation over $D_{\delta}$.
 % In our numerical example, we choose $\beta =2$ and $\delta=0.1$.
 
 beta = 2;
@@ -63,11 +65,11 @@ func_value2 = func(xlist2);
 
 figure()
 subplot(1,2,1)
-h1=plot(xlist1,targ_value1,'b-'); hold on
-h2=plot(-xlist1,-targ_value1,'b-');
-h3=plot(xlist2,func_value2,'r-');
+h1=plot(xlist1,targ_value1,'b-','linewidth',2); hold on
+h2=plot(-xlist1,-targ_value1,'b-','linewidth',2);
+h3=plot(xlist2,func_value2,'r-.');
 hold off
-legend([h1 h3],{'target function','polynomial approximation'})
+legend([h1 h3],{'target','polynomial'})
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$f(x)$', 'Interpreter', 'latex')
 

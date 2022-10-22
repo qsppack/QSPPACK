@@ -1,5 +1,4 @@
 %% Matrix inversion
-% Jiasu Wang, July 2022
 
 %%
 % (example/matrix_inversion.m)

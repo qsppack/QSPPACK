@@ -1,5 +1,4 @@
 %% Uniform singular value amplification
-% Jiasu Wang, July 2022
 
 %%
 % (example/uniform_singular_value_amplification.m)

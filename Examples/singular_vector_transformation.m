@@ -1,5 +1,4 @@
 %% Singular vector transformation
-% Jiasu Wang, July 2022
 
 %%
 % (example/singular_vector_transformation.m)

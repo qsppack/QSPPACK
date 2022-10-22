@@ -47,15 +47,10 @@ npts = length(xpts);
 n_interval = length(opts.intervals) / 2;
 ind_union = [];
 for i = 1 : n_interval
-  ind_set = find((xpts >= opts.intervals(2*i-1)) &...
+  ind_set{i} = find((xpts >= opts.intervals(2*i-1)) &...
     (xpts<=opts.intervals(2*i)));
-%   if ind_set(1)>1
-%       ind_set=[ind_set(1)-1;ind_set];
-%   end
-%   if ind_set(end)<npts
-%       ind_set=[ind_set;ind_set(end)+1];
-%   end    
-  ind_union = union(ind_union, ind_set);
+
+  ind_union = union(ind_union, ind_set{i});
 end
 
 
@@ -115,23 +110,21 @@ if( opts.isplot )
   figure(1)
   clf
   hold on
-  h1=plot(xpts, opts.fscale * func(xpts), 'r--','LineWidth',1.5);
-  h2=plot(xpts, y, 'b-', 'LineWidth',1.5);
+  plot(xpts, y, 'ro', 'LineWidth',1.5);
   for i = 1 : n_interval
-    % plot(xpts(intervals{i}), fx(intervals{i}),'r--')
-    plot(xpts(intervals{i}), y(intervals{i}),'b-o','LineWidth',1.5)
+    plot(xpts(ind_set{i}), y(ind_set{i}),'b-','LineWidth',2)
   end
   hold off
   xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
   ylabel('$f(x)$', 'Interpreter', 'latex', 'FontSize', 15);
-  legend([h1 h2],{'target function','polynomial approximation'},'FontSize', 15);
+  legend({'polynomial','target'},'FontSize', 15);
 
 
   figure(2)
   clf
   hold on
   for i = 1 : n_interval
-    plot(xpts(intervals{i}), abs(y(intervals{i})-fx(intervals{i})), 'k-',...
+    plot(xpts(ind_set{i}), abs(y(ind_set{i})-fx(ind_set{i})), 'k-',...
         'LineWidth',1.5)
   end
   hold off
@@ -139,7 +132,5 @@ if( opts.isplot )
   ylabel('$|f_\mathrm{poly}(x)-f(x)|$', 'Interpreter', 'latex','FontSize', 15);
 end
 
-%% Compute the QSP phase factors
-% opts_qsp.criteria = opts.criteria;
-% [phi,out] = QSP_solver(coef, parity,opts_qsp);
+
 end

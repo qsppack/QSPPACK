@@ -1,5 +1,4 @@
 %% Hamiltonian simulation
-% Jiasu Wang, July 2022
 
 %%
 % (example/hamiltonian_simulation.m)

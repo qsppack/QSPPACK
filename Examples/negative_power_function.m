@@ -1,5 +1,4 @@
 %% Negative power function
-% Jiasu Wang, August 2022
 
 %%
 % (example/negative_power_function.m)
