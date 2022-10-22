@@ -5,39 +5,29 @@
 % (example/quantum_gaussian_filter.m)
 
 %% 
-% The Quantum Gaussian filter solves the approximate ground state by 
-% performing a Gaussian function of Hamiltonian $H$ on a given initial 
-% state which has a sufficient overlapping with the ground state. 
-% The Gaussian filter operator is $e^{-(H-\mu I)^2/\sigma^2}$, where the
-% expected value $\mu$ and variance $\sigma^2$ of the Gaussian function 
-% correspond to minus shift-energy and width of the Gaussian filter.
-% Let $|\lambda_j\rangle$ be the eigenstate of $H$ corresponding to j-th 
-% smallest eigenvalue $\lambda_j\rangle$. The Gaussian filter operator 
-% results in an additional weight $e^{-(\lambda_i-\mu I)^2/\sigma^2}$ for 
-% each eigenstate, which monotonically decreases with the eigenvalue. 
-% Without loss of generlaity, we assume that all eigenvalues lie in $[0,1]$.
-% Then as the variance $\sigma^2$ or the expected value $\mu$ of the 
-% Gaussian function decreases, the resulting state converges to the ground 
-% state $|\lambda_0\rangle$.
+% The Quantum Gaussian filter can be used to approximate the ground state by 
+% performing a Gaussian function to a Hamiltonian $H$ on a given initial 
+% state. The Gaussian filter operator is $e^{-(H-\mu I)^2/\sigma^2}$.
 
 %%  
 % For numerical demonstration, we consider even function 
 %
-% $$0.8*e^{-(|x|-0.5)^2/3}$$ 
+% $$0.99 * e^{-(|x|-0.5)^2/0.1^2}$$ 
 %
-% whose $l^{\infty}$ norm over $[-1,1]$ is strictly bounded by $0.8$.
+% whose $l^{\infty}$ norm over $[-1,1]$ is strictly bounded by $0.99$, and
+% this is very close to the fully coherent regime.
 
 parity = 0;
-targ = @(x) 0.8*exp(-(abs(x)-0.5).^2/3);
+targ = @(x) 0.99 * exp(-(abs(x)-0.5).^2/0.1^2);
 % Compute its Chebyshev coefficients. 
-d = 200;
+d = 100;
 f = chebfun(targ,d);
 coef = chebcoeffs(f);
 % Only need part of Chebyshev coefficients.
 coef = coef(parity+1:2:end);
 
 %% Solving the phase factors
-% We use LBFGS method for solving phase factors. The parameters of the 
+% We use the Newton method for solving phase factors. The parameters of the 
 % solver is initiated as follows.
 
 opts.maxiter = 100;
@@ -51,10 +41,7 @@ opts.useReal = true;
 
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
-% terms of the normalized $l^{\infty}$ norm
-% $$residual\_norm = \max_{k=1,\cdots,K} |g(x_k,\Phi^*)-f_{poly}(x_k)|$$
-% Using 1000 equally spaced points, the residual error is $5.2558e-13$
-% which attains almost machine precision. We also plot the pointwise error.
+% terms of the normalized $l^{\infty}$ norm.
 
 xlist = linspace(0,1,1000)';
 func = @(x) ChebyCoef2Func(x, coef, parity, true);
@@ -72,5 +59,23 @@ xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f_\mathrm{poly}(x)$', 'Interpreter', 'latex')
 print(gcf,'quantum_gaussian_filter_error.png','-dpng','-r500');
 
+%%
+% Show the quality of polynomial approximation.
+figure()
+hold on
+targ_value = targ(xlist);
+plot(xlist,targ_value,'b-','linewidth',2)
+plot(xlist,func_value,'-.')
+hold off
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$f(x)$', 'Interpreter', 'latex')
+legend('target',  'polynomial',...
+  'location','se')
+
+figure()
+plot(xlist,func_value-targ_value)
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
+print(gcf,'quantum_linear_system_problem_polynomial.png','-dpng','-r500');
 
 

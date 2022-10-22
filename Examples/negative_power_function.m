@@ -23,7 +23,7 @@
 % For numerical demonstration, we set $\kappa =10$, $c=2$ and scale down the 
 % target function.
 kappa = 10;
-targ = @(x) (1/(2*kappa^2))./x.^2;
+targ = @(x) 1./x.^2;
 deg = 150; % approximate f(x) by a polynomial of degree deg
 parity = 0;
 
@@ -41,7 +41,7 @@ opts.isplot = false;
 
 %%
 % The inf norm of target function exceeds 1. Hence we need to rescale it.
-opts.fscale = 0.5;
+opts.fscale = 1/(2*kappa^2);
 
 %%
 % Call |cvx_poly_coef| to compute the Chebyshev coefficients for the best
@@ -70,8 +70,7 @@ opts.method = 'Newton';
 %
 % $$\mathrm{res} =\sqrt{ \sum_{k=1,\cdots,K} (g(x_k,\Phi^*)-f_{poly}(x_k))^2}$$
 %
-% Using 1000 equally spaced points, the residual error is $5.2558e-13$
-% which attains almost machine precision. We also plot the pointwise error.
+% The residual error almost reaches machine precision. We also plot the pointwise error.
 xlist1 = linspace(-1,-1/kappa,500)';
 xlist2 = linspace(1/kappa,1,500)';
 xlist = cat(1, xlist1,xlist2);
@@ -103,7 +102,7 @@ plot(xlist1,func_value1,'-.')
 hold off
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$f(x)$', 'Interpreter', 'latex')
-legend('target function', '', 'polynomial approximation',...
+legend('target', 'polynomial',...
   'location','se')
 
 figure()
