@@ -15,19 +15,15 @@
 % where $c$ is a interger larger than 1. Similarly, the implement boils
 % down to a scalar function $f(x)=x^{-c}$. Without loss of generality, we 
 % assume the matrix is normalized. We have to find a polynomial with parity
-% approximating $f(x)$ over interval
+% approximating $f(x)$ over the interval
 %
 % $$D_{\kappa}:=[-1,-\kappa]\cup[-\kappa,1].$$
 
 %%
 % For numerical demonstration, we set $\kappa =10$, $c=2$ and scale down the 
-% target function by a factor of $\frac{1}{2\times 10^4}$ to meet the
-% $l^{\infty}$ norm condition over $[-1,1]$.
-%
-% [LL: why the normalization factor is so large here? Should it just be]
-% bounded in $D_{\kappa}$?]
+% target function.
 kappa = 10;
-targ = @(x) (1/(2*kappa^2))/x.^2;
+targ = @(x) (1/(2*kappa^2))./x.^2;
 deg = 150; % approximate f(x) by a polynomial of degree deg
 parity = 0;
 
@@ -37,21 +33,15 @@ parity = 0;
 % which solves the optimization problem and outputs the Chebyshev
 % coefficients of the best approximation polynomial.
 
-%%
-%
-% $$\min_{f\in R[x], \deg(f)\leq d} \max_{x\in [0,1]} |f(x)-sign(x-a)|$$
-%
-% subject to $\max_{x\in[0,1]} |f(x)|\leq 1-epsil$.
 opts.intervals=[1/kappa,1];
 opts.objnorm = Inf;
 opts.epsil = 0.2;
 opts.npts = 400;
 opts.isplot = false;
-opts.fscale = 1;
 
 %%
-% The inf norm of target function exceeds 1. Hence we need rescale it.
-opts.fscale = 5e-5;
+% The inf norm of target function exceeds 1. Hence we need to rescale it.
+opts.fscale = 0.5;
 
 %%
 % Call |cvx_poly_coef| to compute the Chebyshev coefficients for the best
@@ -65,7 +55,7 @@ coef = coef_full(1+parity:2:end);
 %%
 % Set up the parameters for solver.
 opts.maxiter = 100;
-opts.criteria = 1e-12;
+opts.criteria = 1e-14;
 opts.useReal = false;
 opts.targetPre = true;
 
@@ -74,8 +64,7 @@ opts.targetPre = true;
 opts.method = 'Newton';
 [phi_proc,out] = QSP_solver(coef,parity,opts);
 
-%% Verifying the solution
-%
+%% 
 % We verify the solved phase factors by computing the residual error in 
 % terms of the normalized $l^{2}$ norm
 %
@@ -100,4 +89,29 @@ plot(xlist,QSP_value-func_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f_\mathrm{poly}(x)$', 'Interpreter', 'latex')
 print(gcf,'negative_power_function_error.png','-dpng','-r500');
+
+%%
+% Show the quality of polynomial approximation.
+figure()
+hold on
+xlist1 = linspace(1/kappa,1,500)';
+targ_value1 = targ(xlist1);
+plot(xlist1,opts.fscale * targ_value1,'b-','linewidth',2)
+xlist1 = linspace(0,1,1000)';
+func_value1 = func(xlist1);
+plot(xlist1,func_value1,'-.')
+hold off
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$f(x)$', 'Interpreter', 'latex')
+legend('target function', '', 'polynomial approximation',...
+  'location','se')
+
+figure()
+plot(xlist,func_value-opts.fscale * targ_value)
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
+print(gcf,'quantum_linear_system_problem_polynomial.png','-dpng','-r500');
+
+
+
 
