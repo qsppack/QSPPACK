@@ -65,11 +65,8 @@ opts.method = 'Newton';
 
 %% 
 % We verify the solved phase factors by computing the residual error in 
-% terms of the normalized $l^{2}$ norm
-%
-% $$\mathrm{res} =\sqrt{ \sum_{k=1,\cdots,K} (g(x_k,\Phi^*)-f_{poly}(x_k))^2}$$
-%
-% The residual error almost reaches machine precision. We also plot the pointwise error.
+% terms of $l^{\infty}$ norm.
+
 xlist1 = linspace(-1,-1/kappa,500)';
 xlist2 = linspace(1/kappa,1,500)';
 xlist = cat(1, xlist1,xlist2);

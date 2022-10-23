@@ -79,10 +79,7 @@ opts.method = 'Newton';
 
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
-% terms of the normalized $l^{\infty}$ norm
-% $$residual\_norm = \max_{k=1,\cdots,K} |g(x_k,\Phi^*)-f_{poly}(x_k)|$$
-% Using 500 equally spaced points, the residual error is $1.9318e-14$
-% which attains almost machine precision. We also plot the pointwise error.
+% terms of $l^{\infty}$ norm.
 
 xlist = linspace(delta,1,500)';
 func = @(x) ChebyCoef2Func(x, coef, parity, true);

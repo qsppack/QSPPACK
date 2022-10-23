@@ -4,7 +4,7 @@
 % (example/uniform_singular_value_amplification.m)
 
 %% 
-% Uniform singular value amplification uniformly amplify the singular 
+% Uniform singular value amplification uniformly amplifies the singular 
 % values of a matrix represented as a projected unitary.
 % Suppose that we have access to a unitary $U$, its inverse $U^\dagger$ and the 
 % controlled reflection operators $(2\Pi-I)$, $(2\tilde{\Pi}-I)$. 
@@ -15,26 +15,27 @@
 % value zero for other x. 
 
 %%
-% For numerical demonstration, we consider target function $f(x)=\lambda
-% \max(x-a,0)$, where $\lambda =1.5$ and $a=0.5$. 
-a = 0.5;
-lambda = 1.5;
-targ = @(x) lambda*max(abs(x)-a,0);
+% For numerical demonstration, we consider target function to be 
+%
+% $$f(x)=x/a, \quad x\in[0,a], \quad a=0.2.$$
+
+a = 0.2;
+targ = @(x) x/a;
 
 %%
-% To numerically find the best even polynomial approximating $f(x)$ in the sense
-% of 2 norm on the interval $D_{\delta}$, we use a subroutine which solves
-% the problem using convex optimization. We first set the parameters of the
-% subroutine.
+% To numerically find the best odd polynomial approximating $f(x)$,  we use
+% a subroutine which solves the problem using convex optimization. We first
+% set the parameters of the subroutine.
 
-deg = 500;
+deg = 101;
 delta =0.01;
-opts.intervals=[0,a-delta, a+delta,1];
+opts.intervals=[0,a];
 opts.objnorm = Inf;
 % opts.epsil is usually chosen such that target function is bounded by 1-opts.epsil over D_delta 
-opts.epsil = 0.2;
+opts.epsil = 0.01;
 opts.npts = 500;
-opts.fscale = 1;
+opts.fscale = 0.9;
+opts.isplot=true;
 
 %%
 % This subroutine yields the coefficients of the approximation polynomial 
@@ -60,10 +61,8 @@ opts.method = 'Newton';
 
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
-% terms of the normalized $l^{\infty}$ norm
-% $$residual\_norm = \max_{k=1,\cdots,K} |g(x_k,\Phi^*)-f_{poly}(x_k)|$$
-% Using 1000 equally spaced points, the residual error is $1.3767e-14$
-% which attains almost machine precision. We also plot the pointwise error.
+% terms of $l^{\infty}$ norm.
+
 xlist1 = linspace(0,a-delta,500)';
 xlist2 = linspace(a+delta,1,500)';
 xlist = cat(1, xlist1,xlist2);

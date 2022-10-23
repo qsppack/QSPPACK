@@ -73,9 +73,7 @@ opts.method = 'Newton';
 
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
-% terms of the normalized $l^{\infty}$ norm
-%
-% $$residual\_norm = \max_{k=1,\cdots,K} |g(x_k,\Phi^*)-f_{poly}(x_k)|$$
+% terms of $l^{\infty}$ norm.
 
 
 

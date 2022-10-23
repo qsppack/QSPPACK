@@ -40,7 +40,7 @@ opts.useReal = true;
 
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
-% terms of the normalized $l^{\infty}$ norm.
+% terms of $l^{\infty}$ norm.
 
 xlist = linspace(0,1,1000)';
 func = @(x) ChebyCoef2Func(x, coef, parity, true);
