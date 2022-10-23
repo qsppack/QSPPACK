@@ -29,7 +29,7 @@ opts.intervals=[1/kappa,1];
 opts.objnorm = Inf;
 opts.epsil = 0.1;
 opts.npts = 500;
-% opts.isplot = false;
+opts.isplot = true;
 deg = 121;
 
 %%
@@ -73,30 +73,5 @@ plot(xlist,QSP_value-func_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f_\mathrm{poly}(x)$', 'Interpreter', 'latex')
 print(gcf,'quantum_linear_system_problem_error.png','-dpng','-r500');
-
-%%
-% Show the quality of polynomial approximation.
-figure()
-hold on
-xlist1 = linspace(1/kappa,1,500)';
-targ_value1 = targ(xlist1);
-plot(xlist1,opts.fscale * targ_value1,'b-','linewidth',2)
-plot(-xlist1,-opts.fscale * targ_value1,'b-','linewidth',2)
-xlist1 = linspace(-1,1,1000)';
-func_value1 = func(xlist1);
-plot(xlist1,func_value1,'-.')
-hold off
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$f(x)$', 'Interpreter', 'latex')
-legend('target', '', 'polynomial',...
-  'location','se')
-
-figure()
-plot(xlist,func_value-opts.fscale * targ_value)
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
-print(gcf,'quantum_linear_system_problem_polynomial.png','-dpng','-r500');
-
-
 
 

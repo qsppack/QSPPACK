@@ -40,7 +40,7 @@ opts.objnorm = 2;
 opts.epsil = 0.2;
 opts.npts = 500;
 opts.fscale = 1;
-
+opts.isplot = true;
 %%
 % This subroutine yields the coefficients of the approximation polynomial 
 % in the Chebyshev basis.
@@ -63,27 +63,6 @@ targ_value1 = targ(xlist1);
 xlist2 = linspace(-1,1,1000)';
 func_value2 = func(xlist2);
 
-figure()
-subplot(1,2,1)
-h1=plot(xlist1,targ_value1,'b-','linewidth',2); hold on
-h2=plot(-xlist1,-targ_value1,'b-','linewidth',2);
-h3=plot(xlist2,func_value2,'r-.');
-hold off
-legend([h1 h3],{'target','polynomial'})
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$f(x)$', 'Interpreter', 'latex')
-
-xlist = linspace(delta,1,500)';
-targ_value = targ(xlist);
-func_value = func(xlist);
-
-subplot(1,2,2)
-plot(xlist1,func_value-targ_value)
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$f_\mathrm{poly}(x)-f(x)$', 'Interpreter', 'latex')
-
-set(gcf,'Position',[100 100 1200 500])
-print(gcf,'quantum_gibbs_state_preparation_polynomial.png','-dpng','-r500');
 
 %% Solving the phase factors
 % We use Newton's method for solving phase factors. The parameters of the 

@@ -10,8 +10,7 @@
 % controlled reflection operators $(2\Pi-I)$, $(2\tilde{\Pi}-I)$.
 % $A:=\tilde{\Pi} U\Pi$ is of our interest and has a singular value decompostion 
 % $A=\sum_k \sigma_k |\phi_k \rangle \langle \psi_k|$.
-% Singular vector transformation algorithm, first proposed in [GSLW], 
-% transforms an arbitrary input state 
+% Singular vector transformation algorithm performs the transformation
 % $\sum_k \alpha_k|\psi_k\rangle $ to $ \sum_k \alpha_k|\phi_k\rangle$.
 
 %%
@@ -22,7 +21,10 @@
 %%
 % As shown in the proof of Theorem 1 in [GSLW], this algorithm aims at
 % achieving the singular value transformation of A for sign function $f$, 
-% that is, $$f^{(SV)}=\sum_k  |\phi_k\rangle\langle \psi_k|.$$
+% that is, 
+% 
+% $$f^{(SV)}=\sum_k  |\phi_k\rangle\langle \psi_k|.$$
+%
 % In practice, we find an odd polynomial approximation to $f$, denoted as 
 % $f_{poly}$, on the interval $D_{\kappa}=[-1, -\delta]\cup [\delta,1]$. 
 % By applying the singular value transformation for $f_{poly}$ instead, 
@@ -39,7 +41,7 @@ targ = @(x) 0.8*sign(x);
 % We call a subroutine to find the best odd polynomial approximating $f(x)$ 
 % on the interval $D_{\kappa}$, where we solves the problem by convex 
 % optimization. Here are the parameters set for the subroutine.
-opts.intervals=[-1,-delta, delta,1];
+opts.intervals=[delta,1];
 opts.objnorm = Inf;
 opts.epsil = 0.1;
 opts.npts = 500;
@@ -68,7 +70,9 @@ opts.method = 'Newton';
 %% Verifying the solution
 % We verify the solved phase factors by computing the residual error in 
 % terms of the normalized $l^{2}$ norm
+%
 % $$residual\_norm = \sqrt{\sum_{k=1,\cdots,K} (g(x_k,\Phi^*)-f_{poly}(x_k))^2}$$
+%
 % Using 1000 equally spaced points, the residual error is $ 2.7624e-13$
 % which attains almost machine precision. We also plot the pointwise error.
 
