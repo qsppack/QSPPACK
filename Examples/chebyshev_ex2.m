@@ -1,15 +1,16 @@
 %% Generate the phase factors for a Chebyshev polynomial
-% Phase factor for Chebyshev polynomials of the first kind is a zero
-% vector.
+% Phase factor for a simple 3rd order Chebyshev polynomial
+%
+% $f(x) = 0.2 T_1(x) + 0.4 T_3(x)$
 
 %%
-% (example/chebyshev_ex1.m)
+% (example/chebyshev_ex2.m)
 
-k = 5;
-deg = 2*k;
+deg = 3;
 parity = mod(deg,2);
 coef_targ = zeros(deg+1,1);
-coef_targ(deg+1)=1;
+coef_targ(2)=0.2;
+coef_targ(4)=0.4;
 targ = chebfun(coef_targ, 'coeffs');
 
 %%
@@ -39,6 +40,7 @@ opts.method = 'Newton';
 disp('Symmetric phase factors = ');
 disp(phi_proc);
 
+
 %%
 % We do the following test to demonstrate that the obtained phase factors 
 % satisfy expectation.
@@ -61,4 +63,5 @@ figure
 plot(xlist,QSP_value-targ_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f(x)$', 'Interpreter', 'latex')
+
 
