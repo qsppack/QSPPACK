@@ -27,10 +27,10 @@ d = length(xlist);
 ret = zeros(d,1);
 
 if strcmp(typePhi,'reduced')
-   dd = 2 * length(phase)-1+parity;
-   phi = zeros(dd, 1);
-   phi((dd+1-length(phase)):end) = phase;
-   phi(1:length(phase)) = phi(1:length(phase)) + phase(end:-1:1);
+    dd = 2 * length(phase)-1+parity;
+    phi = zeros(dd, 1);
+    phi((dd+1-length(phase)):end) = phase;
+    phi(1:length(phase)) = phi(1:length(phase)) + phase(end:-1:1);
 else
     phi = phase;
 end
