@@ -1,13 +1,16 @@
-%% Generate the phase factors for an all zero vector
+%% Generate the phase factors for a Chebyshev polynomial
+% Phase factor for a simple 3rd order Chebyshev polynomial
 %
-% The answer is known analytically phi=(pi/4,0,0,..,0,pi/4)
+% $f(x) = 0.2 T_1(x) + 0.4 T_3(x)$
 
 %%
-% (example/chebyshev_ex2.m)
+% (example/chebyshev_ex3.m)
 
-deg = 10;
+deg = 3;
 parity = mod(deg,2);
 coef_targ = zeros(deg+1,1);
+coef_targ(2)=0.2;
+coef_targ(4)=0.4;
 targ = chebfun(coef_targ, 'coeffs');
 
 %%
@@ -60,9 +63,31 @@ plot(xlist,QSP_value-targ_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f(x)$', 'Interpreter', 'latex')
 
-%%
-% Plot the phase factor
-plot(phi_proc,'b-o')
-xlabel('$i$', 'Interpreter', 'latex')
-ylabel('$\phi_i$', 'Interpreter', 'latex')
-title('Phase factor');
+%% 
+% Let us check it explicitly (i.e., we look into the implementation of
+% QSPGetUnitary)
+
+x = rand(1);
+fprintf('at a random x = %g\n', x);
+fprintf('QSP value = %g\n', QSPGetUnitary(phi_proc,x));
+fprintf('Target    = %g\n', targ(x));
+
+function [targ] = QSPGetUnitary(phase, x)
+
+    Wx = [x, 1j*sqrt(1-x^2); 1j*sqrt(1-x^2), x];
+    expphi = exp(1j*phase);
+
+    ret = [expphi(1), 0; 0, conj(expphi(1))];
+
+    for k = 2:numel(expphi)
+        temp = [expphi(k), 0; 0, conj(expphi(k))];
+        ret = ret * Wx * temp;
+    end
+
+    targ = real(ret(1,1));
+
+end
+
+
+
+

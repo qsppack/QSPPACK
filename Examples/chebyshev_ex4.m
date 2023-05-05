@@ -1,13 +1,23 @@
-%% Generate the phase factors for an all zero vector
+%% Generate the phase factors for a random even Chebyshev polynomial
 %
-% The answer is known analytically phi=(pi/4,0,0,..,0,pi/4)
 
 %%
-% (example/chebyshev_ex2.m)
+% (example/chebyshev_ex4.m)
 
 deg = 10;
 parity = mod(deg,2);
-coef_targ = zeros(deg+1,1);
+coef_targ = randn(deg+1,1);
+if parity == 0
+  % Eliminate odd terms
+  coef_targ(2:2:end) = 0;
+else
+  % Eliminate even terms
+  coef_targ(1:2:end) = 0;
+end
+targ = chebfun(coef_targ, 'coeffs');
+max_targ = max(abs(targ));
+% normalize and regenerate the Chebyshev polynomial
+coef_targ = coef_targ / max_targ * 0.9;
 targ = chebfun(coef_targ, 'coeffs');
 
 %%

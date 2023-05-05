@@ -64,3 +64,9 @@ xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f(x)$', 'Interpreter', 'latex')
 print(gcf,'hamiltonian_simulation.png','-dpng','-r500');
 
+%%
+% Plot the phase factor
+plot(phi_proc,'b-o')
+xlabel('$i$', 'Interpreter', 'latex')
+ylabel('$\phi_i$', 'Interpreter', 'latex')
+title('Phase factor');

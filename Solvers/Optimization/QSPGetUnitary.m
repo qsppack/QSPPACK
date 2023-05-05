@@ -13,19 +13,19 @@
 %
 %  ----------------------------------------------------------------------
 
-function [targ] = QSPGetUnitary(phase, x)
+function targ = QSPGetUnitary(phase, x)
 
-Wx = [x, 1j*sqrt(1-x^2); 1j*sqrt(1-x^2), x];
-expphi = exp(1j*phase);
+    Wx = [x, 1j*sqrt(1-x^2); 1j*sqrt(1-x^2), x];
+    expphi = exp(1j*phase);
 
-ret = [expphi(1), 0; 0, conj(expphi(1))];
+    ret = [expphi(1), 0; 0, conj(expphi(1))];
 
-for k = 2:numel(expphi)
-    temp = [expphi(k), 0; 0, conj(expphi(k))];
-    ret = ret * Wx * temp;
-end
+    for k = 2:numel(expphi)
+        temp = [expphi(k), 0; 0, conj(expphi(k))];
+        ret = ret * Wx * temp;
+    end
 
-targ = real(ret(1,1));
+    targ = real(ret(1,1));
 
 end
 

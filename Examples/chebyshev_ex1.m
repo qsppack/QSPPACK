@@ -1,6 +1,7 @@
-%% Generate the phase factors for a Chebyshev polynomial
-% Phase factor for Chebyshev polynomials of the first kind is a zero
-% vector.
+%% Generate the phase factors for a Chebyshev polynomial of the first
+%kind
+%
+% The answer is known analytically phi=(0,0,..,0)
 
 %%
 % (example/chebyshev_ex1.m)
@@ -13,8 +14,7 @@ coef_targ(deg+1)=1;
 targ = chebfun(coef_targ, 'coeffs');
 
 %%
-% We only need its Chebyshev coefficients with respect to $T_{2k}$, where
-% $k$ is nonegative integer.
+% We only need its Chebyshev coefficients with respect to its parity
 coef = coef_targ(parity+1:2:end);
 
 %%
