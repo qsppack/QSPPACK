@@ -1,4 +1,4 @@
-function [phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,phi,opts)
+function [phi,obj_value,iter] = QSP_LBFGS(obj,grad,delta,phi,opts)
 %--------------------------------------------------------------------------
 % Solving phase factors optimization via L-BFGS
 %
@@ -22,16 +22,15 @@ function [phi,obj_value,out] = QSP_LBFGS(obj,grad,delta,phi,opts)
 % Output:
 %         phi --- Solution of phase factors optimization
 %   obj_value --- Objection value at optimal point L(phi^*)
-%         out --- Information about solving process
+%        iter --- iteration number
 %
 %--------------------------------------------------------------------------
 %
 % Reference: Yulong Dong, Xiang  Meng, K.Birgitta Whaley and Lin Lin
 %            Efficient Phase Factor Evaluation in Quantum Signal Processing
-%
-% Author: Xiang Meng, Yulong Dong
-% Version 1.0
-% Last Update 02/2020
+%--------------------------------------------------------------------------
+% Author:      Xiang Meng, Yulong Dong  update 02/2020
+%              Jiasu Wang               update 07/2022
 %
 %--------------------------------------------------------------------------
 % options for L-BFGS solver
@@ -130,10 +129,5 @@ while(true)
     if iter>=maxiter; fprintf("Max iteration reached.\n"); break; end
     if obj_max<crit^2; fprintf("Stop criteria satisfied.\n"); break; end
 end
-
-%--------------------------------------------------------------------------
-% output information
-
-out.iter = iter; 
 
 end
