@@ -23,22 +23,18 @@ The package contains two kinds of solvers:
 
 The package also contains an implementation of the Remez algorithm for finding polynomial approximation.
 
-Applications have been solved by these solvers:
-
-- Hamiltonian simulation
-- Eigenstate filter
-- Matrix inversion
-
 ## Citing our work
 
 If you find our work useful or you use our work in your own project, please consider to cite our work.
 
-- [Y. Dong, X. Meng, K. B. Whaley, and L. Lin. Efficient Phase Factor Evaluation in Quantum Signal Processing, Phys. Rev. A 103, 042419, 2021](https://arxiv.org/abs/2002.11649)
+- Dong, Y., Meng, X., Whaley, K.B. and Lin, L., 2021. Efficient phase-factor evaluation in quantum signal processing. Physical Review A, 103(4), p.042419.
+- Wang, J., Dong, Y. and Lin, L., 2021. On the energy landscape of symmetric quantum signal processing. Quantum 6 (2022): 850.
+- Dong, Y., Lin, L., Ni, H., & Wang, J. (2022). Infinite quantum signal processing. arXiv preprint arXiv:2209.10162.
 
 Other references: 
 
-- [A. Gilyén, Y. Su, G. H. Low, and N. Wiebe. Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics. In Proceedings of the 51st Annual ACM SIGACT Symposium on Theory of Computing, pages 193–204, 2019](https://dl.acm.org/doi/10.1145/3313276.3316366)
-- [J. Haah. Product decomposition of periodic functions in quantum signal processing.Quantum, 3:190, 2019](https://quantum-journal.org/papers/q-2019-10-07-190/)
+- A. Gilyén, Y. Su, G. H. Low, and N. Wiebe. Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics. In Proceedings of the 51st Annual ACM SIGACT Symposium on Theory of Computing, pages 193–204, 2019
+- J. Haah. Product decomposition of periodic functions in quantum signal processing.Quantum, 3:190, 2019
 
 
 
@@ -47,6 +43,8 @@ Other references:
 We hope that the package is useful for your application. If you have any bug reports or comments, please feel free to email one of the software authors:
 
 * Yulong Dong, dongyl@berkeley.edu
+
+* Jiasu Wang, jiasu@berkeley.edu
 
 * Xiang Meng, mengxianglgal@gmail.com
 
@@ -65,9 +63,9 @@ We hope that the package is useful for your application. If you have any bug rep
 - Alternatively you can install qsppack to your current directory by pasting the code below to your MATLAB command window:
 
     ```matlab
-    unzip('https://github.com/qsppack/qsppack/archive/master.zip')
-    movefile('QSPPACK-master', 'qsppack')
-    addpath(fullfile(cd,'qsppack','Solvers','Optimization')), savepath
+	unzip('https://github.com/qsppack/qsppack/archive/master.zip')
+	movefile('QSPPACK-master', 'qsppack')
+	addpath(fullfile(cd,'qsppack','Solvers','Optimization')), savepath
     ```
 
 Then you can test qsppack by running
