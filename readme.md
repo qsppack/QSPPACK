@@ -4,6 +4,10 @@
 
 A toolbox for solving phase factors in quantum signal processing.
 
+## Official Website
+https://qsppack.gitbook.io/qsppack/
+You may find useful tutorials and examples in this website.
+
 ## Problems and solvers
 
 Given a real polynomial <img src="http://chart.googleapis.com/chart?cht=tx&chl= f" style="border:none;"> of degree <img src="http://chart.googleapis.com/chart?cht=tx&chl= d" style="border:none;"> with definite parity such that <img src="http://chart.googleapis.com/chart?cht=tx&chl= |f(x)| \le 1, x\in[-1,1]" style="border:none;">, the package contains codes for solving phase factors <img src="http://chart.googleapis.com/chart?cht=tx&chl= \Phi=(\phi_0,\dots,\phi_d)" style="border:none;"> such that
