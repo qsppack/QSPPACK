@@ -48,6 +48,8 @@ We hope that the package is useful for your application. If you have any bug rep
 
 * Xiang Meng, mengxianglgal@gmail.com
 
+* Hongkang Ni
+
 * Lin Lin, linlin@math.berkeley.edu
 
   
