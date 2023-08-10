@@ -20,7 +20,10 @@ parity = 0;
 targ = @(x) 0.99 * exp(-(abs(x)-0.5).^2/0.1^2);
 % Compute its Chebyshev coefficients. 
 d = 100;
-f = chebfun(targ,d);
+% The second parameter of chebfun should be degree + 1.
+% The function chebfun(F, N) characterizes the function F on a size-N grid
+% by interpolation. Thus, the degree of the interpolated polynomial is N - 1.
+f = chebfun(targ,d + 1);
 coef = chebcoeffs(f);
 % Only need part of Chebyshev coefficients.
 coef = coef(parity+1:2:end);
