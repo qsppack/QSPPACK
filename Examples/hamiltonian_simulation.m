@@ -47,6 +47,8 @@ opts.targetPre = true;
 %%
 % Use the fixed point iteration method to find phase factors
 opts.method = 'FPI';
+%opts.method = 'Newton';
+
 [phi_proc,out] = QSP_solver(coef,parity,opts);
 
 %%
@@ -59,6 +61,18 @@ err= norm(QSP_value-targ_value,1)/length(xlist);
 disp('The residual error is');
 disp(err);
 
+
+figure
+hold on
+plot(xlist,QSP_value,'b-')
+plot(xlist,targ_value,'r--')
+hold off
+legend('QSP','Target')
+xlabel('$x$', 'Interpreter', 'latex')
+
+
+
+figure
 plot(xlist,QSP_value-targ_value)
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$g(x,\Phi^*)-f(x)$', 'Interpreter', 'latex')
@@ -66,7 +80,19 @@ print(gcf,'hamiltonian_simulation.png','-dpng','-r500');
 
 %%
 % Plot the phase factor
+figure
 plot(phi_proc,'b-o')
 xlabel('$i$', 'Interpreter', 'latex')
 ylabel('$\phi_i$', 'Interpreter', 'latex')
 title('Phase factor');
+
+%%
+% Demonstrate decay behavior
+figure
+phi_shift = phi_proc(1:end);
+phi_shift(1) = phi_shift(1)-pi/4;
+phi_shift(end) = phi_shift(end)-pi/4;
+semilogy(abs(phi_shift))
+axis tight
+ylabel('$|\Phi-\Phi_0|$')
+title('Decay behavior')
