@@ -12,7 +12,6 @@
 % (example/chebyshev_random_modified_phase.m)
 
 deg_list = [9,10,11,12];
-
 for deg = deg_list
     disp('deg = ')
     disp(deg);
@@ -54,7 +53,13 @@ for deg = deg_list
     opts.method = 'Newton';
     [phi_proc,out] = QSP_solver(coef,parity,opts);
     % Convert to the phase factor used in the circuit
-    phi_mod=modify_phase_factor_circuit(phi_proc);
+    opts_mod.symm = 1;
+    fprintf('\n symmetric modification\n');
+
+%     opts_mod.symm = 0;
+%     fprintf('\n asymmetric modification\n');
+
+    phi_mod=modify_phase_factor_circuit(phi_proc, opts_mod);
     
     % We do the following test to demonstrate that the obtained phase factors 
     % satisfy expectation.
