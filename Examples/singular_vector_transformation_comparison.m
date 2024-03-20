@@ -1,7 +1,4 @@
-%% Uniform Singular Value Amplification Comparison
-% This script compares the performance of direct construction and convex optimization-based methods
-% for uniform singular value amplification. It aims to approximate a linear function within a specified
-% interval using these methods and evaluates their performance.
+%% Singular Value transformation Comparison
 
 %% Initialization
 fscale = 1/1.05;       % Scaling factor to ensure bounds
@@ -54,7 +51,7 @@ xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
 ylabel('$|f_{\mathrm{poly}}(x) - f(x)|$', 'Interpreter', 'latex', 'FontSize', 15);
 title('Error', 'FontSize', 15);
 
-print(sprintf('singular_vector_amplification_analytic_deg_%d.png', deg),'-dpng','-r500');
+print(sprintf('singular_vector_transformation_analytic_deg_%d.png', deg),'-dpng','-r500');
 
 
 %% Convex Optimization Method
@@ -101,7 +98,7 @@ xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
 ylabel('$|f_{\mathrm{poly}}(x) - f(x)|$', 'Interpreter', 'latex', 'FontSize', 15);
 title('Error', 'FontSize', 15);
 
-print(sprintf('singular_vector_amplification_convex_deg_%d.png', deg),'-dpng','-r500');
+print(sprintf('singular_vector_transformation_convex_deg_%d.png', deg),'-dpng','-r500');
 
 %% Find the QSP phase factors
 % We use Newton's method for solving phase factors. The parameters of the 
@@ -123,11 +120,20 @@ err= norm(QSP_value-func_value,Inf);
 disp('The residual error is');
 disp(err);
 
+%%
+% Demonstrate decay behavior
+figure
+phi_shift = phi_proc(1:end);
+phi_shift(1) = phi_shift(1)-pi/4;
+phi_shift(end) = phi_shift(end)-pi/4;
+semilogy(abs(phi_shift))
+axis tight
+ylabel('$|\Phi-\Phi_0|$')
+title('Decay behavior')
+print(sprintf('phase_singular_vector_transformation_convex_deg_%d.png', deg),'-dpng','-r500');
 
 %% References
-% [1] Low, G. H., & Chuang, I. L. (2017). Hamiltonian Simulation by
-% Uniform Spectral Amplification. http://arxiv.org/abs/1707.05391,
-% [2] Gilyén, A., Su, Y., Low, G. H., & Wiebe, N. (2018). Quantum singular
+% [1] Gilyén, A., Su, Y., Low, G. H., & Wiebe, N. (2018). Quantum singular
 % value transformation and beyond: exponential improvements for quantum
 % matrix arithmetics. 1–67. http://arxiv.org/abs/1806.01838
 

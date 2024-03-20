@@ -126,6 +126,19 @@ err= norm(QSP_value-func_value,Inf);
 disp('The residual error is');
 disp(err);
 
+%%
+% Demonstrate decay behavior
+figure
+phi_shift = phi_proc(1:end);
+phi_shift(1) = phi_shift(1)-pi/4;
+phi_shift(end) = phi_shift(end)-pi/4;
+semilogy(abs(phi_shift))
+axis tight
+ylabel('$|\Phi-\Phi_0|$')
+title('Decay behavior')
+print(sprintf('phase_uniform_singular_value_amplification_convex_deg_%d.png', deg),'-dpng','-r500');
+
+
 %% References
 % [1] Low, G. H., & Chuang, I. L. (2017). Hamiltonian Simulation by
 % Uniform Spectral Amplification. http://arxiv.org/abs/1707.05391,
