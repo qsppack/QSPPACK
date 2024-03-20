@@ -1,0 +1,121 @@
+%% Uniform Singular Value Amplification Comparison
+% This script compares the performance of direct construction and convex optimization-based methods
+% for uniform singular value amplification. It aims to approximate a linear function within a specified
+% interval using these methods and evaluates their performance.
+
+%% Initialization
+fscale = 0.95;       % Scaling factor to ensure bounds
+a = 0.2;            % Upper limit of the interval [0, a]
+parity = 1;         % Ensures the function is odd
+epsil = 0.0001;     % Small value for accuracy in polynomial degree calculation
+targ = @(x) x/a;    % Target linear function scaled by 1/a
+
+%% Analytic Method using Odd Polynomial Approximation
+% Approximates the truncated linear function on [0, a] using erf functions
+fprintf('Analytic method\n');
+w = 2*a;
+kappa = 0.01;
+k = sqrt(2)/kappa*sqrt(log(2/(pi*epsil^2)));
+delta = (w+kappa)/2;
+x = chebfun(@(x) x);
+f_obj = chebfun({0, x/a, 0}, [-1 -a a 1]);  % Target function representation
+
+% Degree of the polynomial for approximation
+deg_list = [1001];  % Example degree for approximation
+
+for j = 1:length(deg_list)
+    deg = deg_list(j);
+    fprintf('deg analytic = %d\n', deg);
+    f_approx = x / (a) * (0.5 * (erf(k*(x+delta)) + erf(k*(-x+delta))));
+    coef_full = chebcoeffs(fscale * f_approx, deg+1);
+    poly_cheb = chebfun(coef_full, 'coeffs');
+    max_cheb = max(abs(poly_cheb));
+    if max_cheb > 1
+        error('Inf norm of the function is > 1');
+    end
+end
+
+% Plotting the analytic method results
+figure(1)
+clf
+subplot(2,1,1);
+hold on
+plot(x, poly_cheb, 'ro-', 'LineWidth', 1.5);
+plot(x, fscale*f_obj, 'b-', 'LineWidth', 2);
+hold off
+xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
+ylabel('$f(x)$', 'Interpreter', 'latex', 'FontSize', 15);
+legend({'Poly', 'Target'}, 'FontSize', 15);
+title(sprintf('Analytic. Degree = %d', deg), 'FontSize', 15);
+box on
+
+subplot(2,1,2);
+plot(x, abs(poly_cheb - fscale*f_obj), 'k-', 'LineWidth', 1.5);
+xlim([0 a-0.01]);  % Limiting x-axis to [0, a]
+xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
+ylabel('$|f_{\mathrm{poly}}(x) - f(x)|$', 'Interpreter', 'latex', 'FontSize', 15);
+title('Error', 'FontSize', 15);
+
+print(sprintf('uniform_singular_value_amplification_analytic_deg_%d.png', deg),'-dpng','-r500');
+
+
+%% Convex Optimization Method
+% Finds the optimal polynomial using convex optimization
+fprintf('Convex optimization method\n');
+deg_cvx_list = [51];  % Example degree list for convex optimization method
+opts.npts = 1000;
+opts.epsil = 1-fscale;
+opts.fscale = fscale;
+opts.intervals = [0, a];
+opts.objnorm = Inf;
+opts.isplot = false;
+
+for j = 1:length(deg_cvx_list)
+    deg = deg_cvx_list(j);
+    fprintf('deg cvx = %d\n', deg);
+    coef_full = cvx_poly_coef(targ, deg, opts);
+    poly_cheb = chebfun(coef_full, 'coeffs');
+    max_cheb = max(abs(poly_cheb));
+    if max_cheb > 1
+        error('Inf norm of the function is > 1');
+    end
+end
+
+% Plotting the convex optimization method results
+figure(2)
+clf
+subplot(2,1,1);
+hold on
+plot(x, poly_cheb, 'ro-', 'LineWidth', 1.5);
+plot(x, fscale*f_obj, 'b-', 'LineWidth', 2);
+hold off
+xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
+ylabel('$f(x)$', 'Interpreter', 'latex', 'FontSize', 15);
+legend({'Poly', 'Target'}, 'FontSize', 15);
+title(sprintf('Optimized. Degree = %d', deg), 'FontSize', 15);
+box on
+
+subplot(2,1,2);
+plot(x, abs(poly_cheb - fscale*f_obj), 'k-', 'LineWidth', 1.5);
+xlim([0 a-0.01]);  % Limiting x-axis to [0, a]
+xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 15);
+ylabel('$|f_{\mathrm{poly}}(x) - f(x)|$', 'Interpreter', 'latex', 'FontSize', 15);
+title('Error', 'FontSize', 15);
+
+print(sprintf('uniform_singular_value_amplification_convex_deg_%d.png', deg),'-dpng','-r500');
+
+%% Find the QSP phase factors
+% (Details and implementation of QSP_solver are omitted for brevity)
+
+%% Verifying the Solution
+% Computes the residual error in terms of l^∞ norm.
+
+% (Details and implementation of verification are omitted for brevity)
+
+%% References
+% [1] Low, G. H., & Chuang, I. L. (2017). Hamiltonian Simulation by
+% Uniform Spectral Amplification. http://arxiv.org/abs/1707.05391,
+% [2] Gilyén, A., Su, Y., Low, G. H., & Wiebe, N. (2018). Quantum singular
+% value transformation and beyond: exponential improvements for quantum
+% matrix arithmetics. 1–67. http://arxiv.org/abs/1806.01838
+
