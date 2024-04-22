@@ -91,8 +91,8 @@ end
 
 p_direct = chebfun(coef_direct, 'coeffs');
 
-str_direct = sprintf('Direct. Deg = %d', deg_direct);
-str_cvx    = sprintf('Convex opt. Deg = %d', deg);
+str_direct = sprintf('Analytic   Deg = %d', deg_direct);
+str_cvx    = sprintf('Optimized  Deg = %d', deg);
 
 
 figure;
