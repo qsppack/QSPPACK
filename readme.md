@@ -29,7 +29,10 @@ If you find our work useful or you use our work in your own project, please cons
 
 - Dong, Y., Meng, X., Whaley, K.B. and Lin, L., 2021. Efficient phase-factor evaluation in quantum signal processing. Physical Review A, 103(4), p.042419.
 - Wang, J., Dong, Y. and Lin, L., 2021. On the energy landscape of symmetric quantum signal processing. Quantum 6 (2022): 850.
-- Dong, Y., Lin, L., Ni, H., & Wang, J. (2022). Infinite quantum signal processing. arXiv preprint arXiv:2209.10162.
+- Dong, Y., Lin, L., Ni, H., & Wang, J. (2024). Infinite quantum signal processing. Quantum, 8, 1558.
+- Dong, Y., Lin, L., Ni, H., & Wang, J. (2024). Robust iterative method for symmetric quantum signal processing in all parameter regimes. SIAM Journal on Scientific Computing, 46(5), A2951-A2971.
+- Alexis, M., Lin, L., Mnatsakanyan, G., Thiele, C., & Wang, J. (2024). Infinite quantum signal processing for arbitrary Szeg\H {o} functions. arXiv preprint arXiv:2407.05634.
+- Ni, H., Sarkar, R., Ying, L., & Lin, L. (2025). Inverse nonlinear fast Fourier transform on SU (2) with applications to quantum signal processing. arXiv preprint arXiv:2505.12615.
 
 Other references: 
 
@@ -48,7 +51,7 @@ We hope that the package is useful for your application. If you have any bug rep
 
 * Xiang Meng, mengxianglgal@gmail.com
 
-* Hongkang Ni
+* Hongkang Ni, hongkang@stanford.edu
 
 * Lin Lin, linlin@math.berkeley.edu
 

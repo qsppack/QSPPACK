@@ -34,15 +34,26 @@ function [phi_proc,out] = QSP_solver(coef,parity,opts)
 %
 % Author:         Xiang Meng, Yulong Dong   update 06/2020
 %                 Jiasu Wang                update 07/2022
+%                 Hongkang Ni               update 06/2025
 %
 %--------------------------------------------------------------------------
-% setup options for L-BFGS solver
+% setup options for iterative solvers
 if ~isfield(opts,'maxiter');               opts.maxiter = 5e4; end
 if ~isfield(opts,'criteria');              opts.criteria = 1e-12; end
 if ~isfield(opts,'useReal');               opts.useReal = true; end
 if ~isfield(opts,'targetPre');             opts.targetPre = true;    end
 if ~isfield(opts,'method');                opts.method = 'FPI'; end
 if ~isfield(opts,'typePhi');               opts.typePhi = 'full'; end
+
+% Transpose if coef is a row vector
+if ~isvector(coef)
+    error('invalid input')
+end
+flag = 0;
+if isrow(coef)
+    coef = coef.';
+    flag = -1;
+end
 
 
 if strcmp(opts.method,'LBFGS')
@@ -81,8 +92,14 @@ elseif strcmp(opts.method,'FPI')
     
 elseif strcmp(opts.method, 'Newton')
     [phi, err, iter, runtime] = QSP_Newton(coef, parity, opts);
+elseif strcmp(opts.method, 'INFFT')
+    [phi, err, runtime] = QSP_Weiss_INFFT(coef, parity, opts);
+    if( parity == 0 )
+        phi(1) = phi(1)/2;
+    end
+    iter = 0; % INFFT does not have iterations
 else
-    fprintf("Assigned method doesn't exist. Please choose method from 'LBFGS', 'FPI' or 'Newton'.\n");
+    fprintf("Assigned method doesn't exist. Please choose method from 'LBFGS', 'FPI', 'Newton', or 'INFFT'.\n");
 end
 
 %--------------------------------------------------------------------------
@@ -100,6 +117,10 @@ if strcmp(opts.typePhi,'full')
 else
     phi_proc = phi;
     out.typePhi = 'reduced';
+end
+
+if flag == -1
+    phi_proc = phi_proc.';
 end
 
 end
