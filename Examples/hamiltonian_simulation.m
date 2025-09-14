@@ -96,3 +96,40 @@ semilogy(abs(phi_shift))
 axis tight
 ylabel('$|\Phi-\Phi_0|$')
 title('Decay behavior')
+
+%%
+% Generate the required figure for the LaTeX document with 3 subfigures
+figure('Position', [100, 100, 1200, 400])
+
+% Left subplot: polynomial approximation vs actual function
+subplot(1,3,1)
+hold on
+plot(xlist, targ_value, 'r-', 'LineWidth', 1.5, 'DisplayName', 'Target')
+plot(xlist, QSP_value, 'b--', 'LineWidth', 1.5, 'DisplayName', 'QSP')
+hold off
+xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 12)
+ylabel('$f(x)$', 'Interpreter', 'latex', 'FontSize', 12)
+ylim([-1,1])
+legend('Location', 'best')
+grid on
+box on
+
+% Middle subplot: error between polynomial and actual function
+subplot(1,3,2)
+plot(xlist, QSP_value - targ_value, 'k-', 'LineWidth', 1.5)
+xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 12)
+ylabel('Error', 'FontSize', 12)
+grid on
+box on
+
+% Right subplot: phase factors (after removing pi/4 factor)
+subplot(1,3,3)
+plot(1:length(phi_shift), phi_shift, 'bo-', 'MarkerSize', 4, 'LineWidth', 1)
+xlabel('Index $j$', 'Interpreter', 'latex', 'FontSize', 12)
+ylabel('Phase Factors', 'FontSize', 12)
+grid on
+axis tight
+box on
+
+% Save the figure
+print(gcf, 'qsp_cos100x.png', '-dpng', '-r300')
