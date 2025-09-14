@@ -21,7 +21,9 @@ targ = @(x) 0.5*cos(tau.*x);
 % The Chebyshev coefficients can be computed using |chebfun|. We truncate the series up
 % to $d=1.4| \tau |+\log(1/\epsilon_0)$ such that the approximation error is 
 % bounded by $\epsilon_0$.
-d = ceil(1.4*tau+log(1e14));
+% d = ceil(1.4*tau+log(1e14));
+d = 150;
+display(['Degree of the approximating polynomial: ', num2str(d)]);
 f = chebfun(targ,d);
 coef = chebcoeffs(f);
 
@@ -33,7 +35,7 @@ coef = coef(parity+1:2:end);
 %%
 % Set up the parameters for the solver.
 opts.maxiter = 100;
-opts.criteria = 1e-12;
+opts.criteria = 1e-14;
 
 %%
 % Set |opts.useReal| to be |true| will increase the computing speed.
@@ -55,7 +57,9 @@ opts.method = 'FPI';
 % We do the following test to demonstrate that the obtained phase factors 
 % satisfy expectation.
 xlist = linspace(0, 1, 1000)';
+func = @(x) ChebyCoef2Func(x, coef, parity, true);
 targ_value = targ(xlist);
+func_value = func(xlist);
 QSP_value = QSPGetEntry(xlist, phi_proc, out);
 err= norm(QSP_value-targ_value,1)/length(xlist);
 disp('The residual error is');
@@ -116,17 +120,17 @@ box on
 
 % Middle subplot: error between polynomial and actual function
 subplot(1,3,2)
-plot(xlist, QSP_value - targ_value, 'k-', 'LineWidth', 1.5)
+plot(xlist, QSP_value - func_value, 'k-', 'LineWidth', 1.5)
 xlabel('$x$', 'Interpreter', 'latex', 'FontSize', 12)
-ylabel('Error', 'FontSize', 12)
+ylabel('QSP error', 'FontSize', 12)
 grid on
 box on
 
 % Right subplot: phase factors (after removing pi/4 factor)
 subplot(1,3,3)
-plot(1:length(phi_shift), phi_shift, 'bo-', 'MarkerSize', 4, 'LineWidth', 1)
+semilogy(1:length(phi_shift), abs(phi_shift), 'bo-', 'MarkerSize', 4, 'LineWidth', 1)
 xlabel('Index $j$', 'Interpreter', 'latex', 'FontSize', 12)
-ylabel('Phase Factors', 'FontSize', 12)
+ylabel('$|\psi_j|$', 'Interpreter', 'latex', 'FontSize', 12)
 grid on
 axis tight
 box on
